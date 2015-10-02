@@ -8,3 +8,13 @@ C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.SLTRulesI
 C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.csproj.GenerateResource.Cache
 C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.exe
 C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.pdb
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\bin\Release\SLTRulesProcess.exe.config
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\bin\Release\SLTRulesProcess.exe
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\bin\Release\SLTRulesProcess.pdb
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\bin\Release\FunctionalDashboard.Dal.dll
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\bin\Release\FunctionalDashboard.Dal.pdb
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\obj\Release\SLTRulesProcess.csprojResolveAssemblyReference.cache
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\obj\Release\SLTRulesProcess.SLTRulesInstaller.resources
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\obj\Release\SLTRulesProcess.csproj.GenerateResource.Cache
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\obj\Release\SLTRulesProcess.exe
+D:\OneDrive\Code\Programs\FunctionalDashboard\SLTRulesProcess\obj\Release\SLTRulesProcess.pdb

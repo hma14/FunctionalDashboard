@@ -8,3 +8,12 @@ D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\
 D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
 D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
 D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dacpac
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\Model.xml
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\refactor.xml
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\postdeploy.sql
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\predeploy.sql
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb
