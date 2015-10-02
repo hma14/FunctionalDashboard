@@ -1,0 +1,2 @@
+﻿CREATE USER [BCTGTWDOM\svcEventSentry] FOR LOGIN [BCTGTWDOM\svcEventSentry];
+

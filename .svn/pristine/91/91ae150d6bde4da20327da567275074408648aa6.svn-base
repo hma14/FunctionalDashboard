@@ -1,0 +1,2 @@
+﻿CREATE USER [BCTGTWDOM\svcCPGDash_dev] FOR LOGIN [BCTGTWDOM\svcCPGDash_dev];
+

@@ -1,0 +1,10 @@
+C:\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dacpac
+C:\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dll
+C:\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
+C:\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
+C:\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dacpac
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb

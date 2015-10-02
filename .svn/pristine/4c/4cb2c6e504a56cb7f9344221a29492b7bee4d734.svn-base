@@ -1,0 +1,246 @@
+﻿@model PagedList.IPagedList<FunctionalDashboard.ViewModels.UserRequestHistory>
+@using PagedList.Mvc;
+@using PagedList;
+@using FunctionalDashboard.Controllers;
+
+
+<div class="demo">
+    <div style="width: 100%;">
+        <h5>User Detail (PPASS)</h5>
+        <div style="float: left; width: 50%;">
+            <div style="float: left; width: 90%;">
+
+                <table class="table">
+                    <caption class="caption">NCS Detail</caption>
+                    <tr>
+                        <td class="bold">Program Name</td>
+
+                        <td>@ViewBag.Program</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">Institution Name</td>
+
+                        <td>@ViewBag.Name</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer ID</td>
+
+                        <td>@ViewBag.OrganizationId</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer Assigned ID</td>
+
+                        <td>@ViewBag.ShortName</td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+            <div style="float: left; width: 90%;">
+
+                <table class="table">
+                    <tr>
+                        <td class="bold">Unique Participant ID</td>
+                        <td>@ViewBag.UniqueParticipantID</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bold">Card Serial Number</td>
+                        <td>@ViewBag.CSN</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">Status - Errors (Cleared)</td>
+
+                        @if (@ViewBag.TotalErrors > 0)
+                        {
+                            <td class="errors bold2">
+                                @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                            </td>
+                        }
+                        else if (@ViewBag.TotalErrors == 0 && @ViewBag.TotalAcknowledged > 0)
+                        {
+                            <td class="acknowledged bold2">
+                                @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                            </td>
+                        }
+                        else if (@ViewBag.TotalErrors == 0 && @ViewBag.TotalAcknowledged == 0 && @ViewBag.TotalClearedErrors > 0)
+                        {
+                            <td class="warnings bold2">
+                                @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="non-error bold2">OK</td>
+                        }
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="RetrievedResult">
+            <table class="table">
+                <caption class="caption">User Request History</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Datetime Processed", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.DateTimeSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Request Transaction ID", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.RequestTxIDSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+
+                    </th>
+
+                    <th class="fixed_column_length_200">
+                        @Ajax.ActionLink("Category", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.TCategorySortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                        (<span class="event_id_bold">id</span>)
+                    </th>
+                    <th class="fixed_column_length_200">
+                        @Ajax.ActionLink("Action", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.ActionSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                        (<span class="event_id_bold">code</span>)
+                    </th>
+                    <th class="fixed_column_length_400">
+                        @Ajax.ActionLink("Reason", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.ReasonSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                        (<span class="event_id_bold">code</span>)
+                    </th>
+                    <th class="fixed_column_length_100">
+                        XML Data
+                    </th>
+                    <th>
+                        @Ajax.ActionLink("Request Status - Errors (Cleared)", "UpdateRetrievedResult", "PpassUserDetail", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                </tr>
+
+
+                @foreach (var item in @Model)
+                {
+                    <tr>
+                        <td>
+                            @item.DatetimeProcessed.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                        </td>
+                        <td>
+                            @item.RequestTxID
+                        </td>
+                        <td>
+                            @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                        </td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(@item.Action))
+                            {
+                                @BaseController.ActionMapping[@item.Action]
+                            }
+                            else
+                            {
+                                @Html.Raw("NA")
+                            }
+                            (<span class="event_id_bold">@item.Action</span>)
+
+                        </td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(@item.Reason))
+                            {
+                                @BaseController.ReasonMapping[@item.Reason]
+                            }
+                            else
+                            {
+                                @Html.Raw("NA")
+                            }
+                            (<span class="event_id_bold">@item.Reason</span>)
+                        </td>
+                        <td>
+                            @{
+                                @Html.ActionLink("View",
+                                                    "Index",
+                                                    "XmlDataPpassUserDetail",
+                                                    new
+                                                    {
+                                                        institutionID = @ViewBag.InstitutionID,
+                                                        uniqueParticipantID = @ViewBag.UniqueParticipantID,
+                                                        csn = @ViewBag.CSN,
+                                                        processTimeTicks = @item.DatetimeProcessed.Ticks,
+                                                        requestTxID = @item.RequestTxID,
+                                                        categoryID = @item.CategoryID,
+                                                        action = @item.Action,
+                                                        reason = @item.Reason,
+                                                    },
+                                                    null)
+                            }
+                        </td>
+
+                        @if (@item.Errors > 0 )
+                        {
+
+                            <td class="errors">
+                                @*@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors)*@
+                                ERROR
+                            </td>
+                        }
+                        else if (@item.Acknowledged > 0 && @item.Errors == 0)
+                        {
+                            <td class="acknowledged">
+                                @*@String.Format("ACKNOWLEDGED ({0:#,###0})", @item.Errors + @item.Acknowledged)*@
+                                ACKNOWLEDGED
+                            </td>
+                        }
+                        else if (item.Acknowledged == 0 && @item.Errors == 0 && @item.ClearedErrors > 0)
+                        {
+                            <td class="warnings">
+                                @*@String.Format("{0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors)*@
+                                CLEARED
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="non-error">
+                                OK
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </table>
+
+            <div class="pager" style="font-size: .6em;">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model as PagedList.IPagedList<FunctionalDashboard.ViewModels.UserRequestHistory>, page => Url.Action("UpdateRetrievedResult", "PpassUserDetail", new { page, sortOrder = ViewBag.CurrentSort }),
+                                                   PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "UserDetail" }))
+
+            </div>
+        </div>
+    </div>
+</div>

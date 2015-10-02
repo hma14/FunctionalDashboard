@@ -1,0 +1,180 @@
+﻿@using FunctionalDashboard.Models
+@using FunctionalDashboard.Controllers
+@using FunctionalDashboard.ViewModels
+
+
+<!DOCTYPE html>
+@*<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">*@
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CPG Functional Dashboard - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="~/Content/themes/base/jquery.ui.all.css">
+    <link rel="stylesheet" href="~/Content/themes/base/demos.css">
+    <link rel="stylesheet" href="~/Content/tabs.css">
+    <link rel="stylesheet" href="~/Content/PagedList.css" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/tabs.css")" type="text/css" />
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery.ui.core.js"></script>
+    <script src="~/Scripts/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/jquery.ui.tabs.js"></script>
+    <script src="~/Scripts/MicrosoftAjax.js" type="text/javascript"></script>
+    <script src="~/Scripts/MicrosoftMvcAjax.js" type="text/javascript"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css", "~/Content/css")
+    @RenderSection("scripts", required: false)
+
+
+</head>
+<body>
+    <script type="text/javascript">
+
+
+        // Menu
+        $(function () {
+            InitMenu();
+        });
+
+        function InitMenu() {
+            $('.menu li').hover(function () {
+                $('ul:first', this).css({ visibility: "visible", display: "none" }).fadeIn(1500).show();
+            }, function () {
+                $('ul:first', this).css({ visibility: "hidden" });
+            });
+        }
+
+    </script>
+
+    <div id="container">
+        <div id="wrapper">
+            <header>
+                <div id="banner" role="banner">
+                    <div style="float: left; width: 45%;">
+
+                        <a href='@Url.Action("Index", "Home")'>
+                            <img id="logo" alt="translink logo" src="~/content/themes/base/images/ctmhz_logo_translink_off.gif" />
+                            <h3>Compass Point Gateway Functional Dashboard</h3>
+                        </a>
+                    </div>
+                    <div style="float: right; width: 55%;">
+                        <table class="current_mode" >
+                            <tr>
+                                <td style="clear:left; width: 30%;">
+                                    <table>
+                                        <tr>
+                                            <td>Current Environment:</td>
+                                            <td><span class="status">@Logs.CurrentEnvironment</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Memory Consumed:</td>
+                                            <td><span class="status">@Logs.MemorySize </span>MB</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Datetime Last Refreshed:</td>
+                                            <td><span class="status">@Logs.LastRefreshed </span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="clear:both; width:70%;">
+                                    <div id="Status" >
+                                        @{
+                                            DataLoadStatus dls = new DataLoadStatus { StartDate = @Convert.ToDateTime(Session["StartDate"].ToString()), EndDate = @Convert.ToDateTime(Session["EndDate"].ToString()) };
+                                            @Html.Partial("~/Views/Shared/_Status.cshtml", dls);
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="current_mode">@Html.MvcSiteMap().SiteMapPath()</div>
+
+                        <br />
+                    </div>
+                    <div class="clear"></div>
+
+                </div>
+                <div>
+
+                    <nav id="nav">
+                        <ul class="menu">
+                            <li class="refresh">
+                                @Html.ActionLink("Refresh Dashboard", "Index", "Home", new { refresh = true }, null)
+                            </li>
+                            <li class="sltalert">
+                                @Ajax.ActionLink("Refresh SLT Alert Status", "SLTAlerts", "Home", new AjaxOptions
+                                   {
+                                       HttpMethod = "GET",
+                                       InsertionMode = InsertionMode.Replace,
+                                       UpdateTargetId = "updateArea1",
+                                       OnComplete = "$('.sltalert').UpdateDateStatus({ start: $('input#StartDatepicker').val(), end: $('input#EndDatepicker').val(), forSLTAlert: true })"
+                                       
+                                   })
+                            </li>
+
+                            <li>
+                                <a href="#" onmouseover="InitMenu();">Logs</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Upass Log", "Index", "Upass", new { id = ENVIRONMENT.Production }, null)</li>
+                                    <li>@Html.ActionLink("UpassSetElig Log", "Index", "UpassSetElig")</li>
+                                    <li>@Html.ActionLink("Ppass Log", "Index", "Ppass")</li>
+                                    <li>@Html.ActionLink("FUF Log", "Index", "FUF")</li>
+                                    <li>@Html.ActionLink("IUF Log", "Index", "IUF")</li>
+                                    <li>@Html.ActionLink("FCF Log", "Index", "FCF")</li>
+                                    <li>@Html.ActionLink("ICF Log", "Index", "ICF")</li>
+                                    <li>@Html.ActionLink("HHU (Confiscation) Log", "Index", "HHU")</li>
+
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="#" onmouseover="InitMenu();">Environment</a>
+                                <ul class="submenu">
+                                    <li>@Html.ActionLink("Production", "Index", "Home", new { id = ENVIRONMENT.Production }, null)</li>
+                                    <li>@Html.ActionLink("Staging", "Index", "Home", new { id = ENVIRONMENT.Staging }, null)</li>
+                                    <li>@Html.ActionLink("Development", "Index", "Home", new { id = ENVIRONMENT.Development }, null)</li>
+                                    <li>@Html.ActionLink("Internal QA", "Index", "Home", new { id = ENVIRONMENT.IntQA }, null)</li>
+                                    <li>@Html.ActionLink("External QA", "Index", "Home", new { id = ENVIRONMENT.ExtQA }, null)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+
+            <div id="main" role="main">
+                @RenderBody()
+            </div>
+            @*<div id="spacer"></div>*@
+        </div>
+
+        @*        <footer role="contentinfo">
+                <div id="footer">
+                    <div id="links">
+                        <a href="#">Compass</a> |
+
+                        <a href="http://www.translink.ca/en/Site-Info/Terms-and-conditions.aspx" target="_blank" class="tc"><span>Terms & Conditions</span></a> |
+                        <a href="http://www.translink.ca/en/Site-Info/Privacy.aspx" target="_blank">Privacy Policy</a>
+                    </div>
+                    <div id="copyright">
+                        &copy; @DateTime.Now.Year TransLink
+                    </div>
+                </div>
+            </footer>*@
+    </div>
+
+
+</body>
+</html>

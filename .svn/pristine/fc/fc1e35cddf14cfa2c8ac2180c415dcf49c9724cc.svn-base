@@ -1,0 +1,12 @@
+﻿@model  PagedList.IPagedList<FunctionalDashboard.ViewModels.UserRequestHistory>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "User Detail (PPASS)";
+}
+
+<div id="UserDetail">
+    @Html.Partial("_UserDetail", Model)
+</div>

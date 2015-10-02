@@ -1,0 +1,5 @@
+C:\FunctionalDashboard1.11\FunctionalDashboard.Dal\bin\Debug\FunctionalDashboard.Dal.dll
+C:\FunctionalDashboard1.11\FunctionalDashboard.Dal\bin\Debug\FunctionalDashboard.Dal.pdb
+C:\FunctionalDashboard1.11\FunctionalDashboard.Dal\obj\Debug\FunctionalDashboard.Dal.dll
+C:\FunctionalDashboard1.11\FunctionalDashboard.Dal\obj\Debug\FunctionalDashboard.Dal.pdb
+C:\FunctionalDashboard1.11\FunctionalDashboard.Dal\obj\Debug\FunctionalDashboard.Dal.csprojResolveAssemblyReference.cache

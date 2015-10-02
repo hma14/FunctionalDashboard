@@ -1,0 +1,58 @@
+﻿@model PagedList.IPagedList<FunctionalDashboard.ViewModels.LogErrors>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+<script type="text/javascript">
+
+    function tabClicked() {
+        $('#tabs').click('tabsselect', function (event, ui) {
+
+            var value = $("#tabs").tabs('option', 'active');
+
+            if (sessionStorage) {
+                sessionStorage.setItem("SelectedTab3", value.toString());
+
+            }
+        });
+    }
+
+    $(function () {
+        if (sessionStorage) {
+            $("#tabs").tabs({ active: sessionStorage.getItem("SelectedTab3") });
+        }
+        else {
+            $("#tabs").tabs()
+        }
+    });
+
+    //$(function () {
+
+    //    $("#tabs").tabs()
+
+    //});
+
+ 
+
+</script>
+<div class="demo">
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1" onclick="tabClicked()">Files</a></li>
+            <li><a href="#tabs-2" onclick="tabClicked()">CUBIC Web Services</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div id="updateAreaFile">
+                @Html.Partial("_PartialFiles", Model)
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div id="updateAreaWS">
+                @Html.Partial("_PartialWS", Model)
+            </div>
+        </div>        
+    </div>
+</div>
+
+

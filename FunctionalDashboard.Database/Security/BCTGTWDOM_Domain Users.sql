@@ -1,0 +1,2 @@
+﻿CREATE USER [BCTGTWDOM\Domain Users] FOR LOGIN [BCTGTWDOM\Domain Users];
+

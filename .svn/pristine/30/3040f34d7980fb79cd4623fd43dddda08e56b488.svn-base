@@ -1,0 +1,760 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/EventsTabFiles.js" type="text/javascript"></script>
+
+
+<div>
+    @using (Ajax.BeginForm("FilesUpdatePartial", "Home", new { sortOrder4 = ViewBag.StatusSortParm }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateArea2",
+        OnSuccess = "$('input#StartDatepicker2').UpdateDateStatus({ start: $('input#StartDatepicker2').val(), end: $('input#EndDatepicker2').val() })"
+    }))
+    {
+        <table class="datepickers">
+
+            <tr>
+                <td>Request Start:
+                    <input style="width:185px;margin:2px;" type="text" id="StartDatepicker2" class="datefield" name="startDate" value="@Session["StartDate"]" />
+                </td>
+            </tr>
+            <tr>
+                <td>Request End: 
+                    <input style="width:185px;margin:2px;" type="text" id="EndDatepicker2" class="datefield" name="endDate" value="@Session["EndDate"]"  />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn_short" id="submit2" type="submit" value="Select Date Range" name="SelectDate" style="clear: both; float: right; margin: 2px;" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+<div id="spinner2" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+<div class="monitor_tables">
+
+
+    <table class="table_short" style="clear: both;">
+        <caption class="caption">PPASS</caption>
+        <tr>
+            <th class="fixed_column_length_100">
+                @Ajax.ActionLink("NCS Customer ID", "FilesUpdatePartial1", new { sortOrder4 = ViewBag.NCSCustomerIDSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+            </th>
+            <th class="fixed_column_length_100">
+                @Ajax.ActionLink("Program", "FilesUpdatePartial1", new { sortOrder4 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+            </th>
+            <th class="fixed_column_length_200">
+                @Ajax.ActionLink("Institution", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            </th>
+            <th class="fixed_column_length_150">
+                @Ajax.ActionLink("Errors (Ack or Cleared)", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.TotalErrorsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            </th>
+            <th>
+                @Ajax.ActionLink("IUF Requests", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.IufRequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+            </th>
+            <th>
+                @Ajax.ActionLink("FUF Requests", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.FufRequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+            </th>
+            <th>
+                @Ajax.ActionLink("FCF Requests", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.FcfRequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            </th>
+            <th>
+                @Ajax.ActionLink("ICF Requests", "FilesUpdatePartial1", "Home", new { sortOrder4 = ViewBag.IcfRequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            </th>
+
+        </tr>
+        @foreach (var item in ViewBag.FilesPartial1)
+        {
+            <tr>
+
+                <td>
+                    @item.NCSCustomerID
+                </td>
+                <td>
+                    @item.Program
+                </td>
+                <td>
+                    @if (item.Institution != null)
+                    {
+                        @Html.ActionLink(@item.Institution as string,
+                                         "Index",
+                                         "ProgramPpass",
+                                         null,
+                                         null,
+                                         "tabs-1",
+                                         new
+                                         {
+                                             institutionID =
+                                             @item.InstitutionID,
+                                             startDate = @ViewBag.startDate,
+                                             endDate = @ViewBag.endDate
+                                         },
+                                         null)
+                    }
+                    else
+                    {
+                        @Html.Raw("NA")
+                    }
+                </td>
+                @if (@item.TotalErrors > 0)
+                {
+                    <td class="errors">
+                        @*@String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)*@
+                        @*@item.TotalErrors (<span style="background-color:yellow; color:blue; padding:2px;">@String.Format("{0:#,###0}", @item.ClearedErrors + @item.Acknowledged)</span>)*@
+                        @item.TotalErrors (<span style="color: yellow;">@String.Format("{0:#,###0}", @item.ClearedErrors + @item.Acknowledged)</span>)
+                    </td>
+                }
+                else if (@item.Acknowledged > 0)
+                {
+                    <td class="acknowledged">
+                        @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                    </td>
+                }
+                else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+                {
+                    <td class="warnings">
+                        @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                    </td>
+                }
+                else
+                {
+                    <td class="non-errors">
+                        @item.TotalErrors
+                    </td>
+                }
+                <td>
+                    @item.IufRequests
+                </td>
+                <td>
+                    @item.FufRequests
+                </td>
+                <td>
+                    @item.FcfRequests
+                </td>
+                <td>
+                    @item.IcfRequests
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pager" style="font-size: .5em; margin-top: -5px;">
+        Page @(ViewBag.FilesPartial1.PageCount < ViewBag.FilesPartial1.PageNumber ? 0 : ViewBag.FilesPartial1.PageNumber) of @ViewBag.FilesPartial1.PageCount
+
+        @Html.PagedListPager(ViewBag.FilesPartial1 as PagedList.IPagedList<FunctionalDashboard.ViewModels.PpassFileErrors>, page => Url.Action("FilesUpdatePartial1", "Home", new { page, sortOrder4 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea2" }))
+
+    </div>
+
+</div>
+
+
+
+
+
+<table class="table_short" style="clear: both; width: 100%">
+    <caption class="caption">UPASS</caption>
+    <tr>
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("NCS Customer ID", "FilesUpdatePartial2", new { sortOrder5 = ViewBag.NCSCustomerIDSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+        </th>
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("Program", "FilesUpdatePartial2", new { sortOrder5 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+        </th>
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("Institution", "FilesUpdatePartial2", "Home", new { sortOrder5 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("Requests", "FilesUpdatePartial2", "Home", new { sortOrder5 = ViewBag.RequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("Errors (Cleared)", "FilesUpdatePartial2", "Home", new { sortOrder5 = ViewBag.TotalErrorsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+    </tr>
+
+    @{
+        int k = 0;
+    }
+    @foreach (var item in ViewBag.FilesPartial2)
+    {
+        k += 1;
+        <tr>
+            <td>
+                @item.NCSCustomerID
+            </td>
+            <td>
+                @item.Program
+            </td>
+            <td>
+                @if (item.Institution != null)
+                {
+                    @Html.ActionLink(@item.Institution as string,
+                                     "Files",
+                                     "ProgramUpass",
+                                     null,
+                                     null,
+                                     "tabs-1",
+                                     new
+                                     {
+                                         institutionID = @item.InstitutionID,
+                                         startDate = @ViewBag.startDate,
+                                         endDate = @ViewBag.endDate
+                                     },
+                                     null)
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.Requests)
+            </td>
+            @if (@item.TotalErrors > 0 && @item.Acknowledged == 0)
+            {
+                <td class="errors">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                </td>
+            }
+            else if (@item.Acknowledged > 0)
+            {
+                <td class="acknowledged">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                </td>
+            }
+            else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+            {
+                <td class="warnings">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                </td>
+            }
+            else
+            {
+                <td class="non-errors">
+                    @item.TotalErrors
+                </td>
+            }
+
+        </tr>
+    }
+</table>
+
+
+
+<div class="pager" style="font-size: .5em; margin-top: -5px;">
+    Page @(ViewBag.FilesPartial2.PageCount < ViewBag.FilesPartial2.PageNumber ? 0 : ViewBag.FilesPartial2.PageNumber) of @ViewBag.FilesPartial2.PageCount
+
+    @Html.PagedListPager(ViewBag.FilesPartial2 as PagedList.IPagedList<FunctionalDashboard.ViewModels.UpassFileErrors>, page => Url.Action("FilesUpdatePartial2", "Home", new { page, sortOrder5 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                              , new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "updateArea2" }))
+
+    @*@Html.PagedListPager(ViewBag.Partial3, page => Url.Action("UpdatePartial", "Home", new { page, sortOrder = ViewBag.CurrentSort }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                 , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea2" }))*@
+</div>
+
+
+
+
+<table class="table_short" style="clear: both; width: 100%;">
+    <caption class="caption">Current File Stream</caption>
+    <tr>
+        <th class="fixed_column_length_150">
+            @Ajax.ActionLink("Date Time Start", "FilesUpdatePartial3", new { sortOrder6 = ViewBag.DateTimeStartSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("Program", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+        </th>
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("Institution", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+        <th class="fixed_column_length_300">
+            @Ajax.ActionLink("Category", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.CategorySortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            (<span class="event_id_bold">id</span>)
+        </th>
+        <th class="fixed_column_length_300">
+            @Ajax.ActionLink("Event", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.CategorySortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+            (<span class="event_id_bold">id</span>)
+        </th>
+        <th class="fixed_column_length_300">
+            @Ajax.ActionLink("URI", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.URISortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+        </th>
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("Requests", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.RequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+
+        </th>
+        <th class="fixed_column_length_300">
+            @Ajax.ActionLink("Status", "FilesUpdatePartial3", "Home", new { sortOrder6 = ViewBag.Status3SortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea2"
+       })
+        </th>
+
+    </tr>
+    @{
+        int j = 20;
+    }
+    @foreach (var item in ViewBag.FilesPartial3)
+    {
+        j += 1;
+        if (@item.CurrentClicked == 1)
+        {
+        <tr>
+            <td class="current_selected">
+                @item.DateStart
+            </td>
+            <td class="current_selected">
+                @item.Program
+            </td>
+            <td class="current_selected">
+                @if (item.Institution != null)
+                {
+                    if (@item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                    {
+                    @Html.ActionLink(@item.Institution as string,
+                                         "Files",
+                                         "ProgramUpass",
+                                         null,
+                                         null,
+                                         "tabs-1",
+                                         new { institutionID = @item.InstitutionID, startDate = @ViewBag.startDate, endDate = @ViewBag.endDate },
+                                         null)
+                    }
+                    else
+                    {                        
+                    @Html.ActionLink(@item.Institution as string,
+                                         "Index",
+                                         "ProgramPpass",
+                                         null,
+                                         null,
+                                         "tabs-1",
+                                         new { institutionID = @item.InstitutionID, startDate = @ViewBag.startDate, endDate = @ViewBag.endDate },
+                                         null)                           
+                    }
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td class="current_selected">
+                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+            </td>
+            <td class="current_selected">
+                <a href="#" id="@string.Format("event{0}", j)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now">
+                    @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                </a>
+            </td>
+            <td class="current_selected">
+                @if (!String.IsNullOrEmpty(@item.URI))
+                {
+                    //string fileName = string.Empty;
+                    //if (@item.URI != null)
+                    //{
+                    //    fileName = Path.GetFileName(@item.URI);
+                    //}
+
+                    if (@item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                    {
+                        if (!String.IsNullOrEmpty(@item.FileName))
+                        {
+                    @Html.ActionLink(@item.FileName as string,
+                                             "Index",
+                                             "DetailedFileUpass",
+                                             new
+                                             {
+                                                 InstitutionID = @item.InstitutionID,
+                                                 dateStartTicks = @item.DateStart.Ticks,
+                                                 URI = @item.URI,
+                                                 uniqueParticipantID = @item.UniqueParticipantID
+                                             },
+                                             null)
+                        }
+                        else
+                        {
+                    @Html.Raw("NA");
+                        }
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(@item.FileName))
+                        {
+                    @Html.ActionLink(@item.FileName as string,
+                                             "Index",
+                                             "DetailedFilePpass",
+                                             new
+                                             {
+                                                 InstitutionID = @item.InstitutionID,
+                                                 dateStartTicks = @item.DateStart.Ticks,
+                                                 URI = @item.URI,
+                                                 uniqueParticipantID = @item.UniqueParticipantID
+                                                 //TotalErrors = @item.TotalErrors 
+                                             },
+                                             null)
+                        }
+                        else
+                        {
+                    @Html.Raw("NA");
+                        }
+
+                    }
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td class="current_selected">
+                @String.Format("{0:#,###0}", @item.Requests)
+            </td>
+            @if (@item.TotalErrors > 0)
+            {
+                <td class="errors">
+                    @String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[ACK]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                           data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                           data-id10="@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)" \
+                           data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else if (@item.Acknowledged > 0)
+            {
+                <td class="acknowledged">
+                    @String.Format("ACKNOWLEDGED ({0:#,###0})", @item.ClearedErrors + @item.Acknowledged)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[CLEAR]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                       data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                       data-id10="@String.Format("ACKNOWLEDGED ({0:#,###0})", @item.ClearedErrors + @item.Acknowledged)" \
+                       data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+            {
+                <td class="warnings">
+                    @String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[UNCLEAR]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                       data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                       data-id10="@String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)" \
+                       data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else
+            {
+                <td class="non-error">Completed
+                </td>
+            }
+
+        </tr>
+        }
+        else
+        {
+        <tr>
+            <td>
+                @item.DateStart
+            </td>
+            <td>
+                @item.Program
+            </td>
+            <td>
+                @if (item.Institution != null)
+                {
+                    if (@item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                    {
+                    @Html.ActionLink(@item.Institution as string,
+                                         "Files",
+                                         "ProgramUpass",
+                                         null,
+                                         null,
+                                         "tabs-1",
+                                         new { institutionID = @item.InstitutionID, startDate = @ViewBag.startDate, endDate = @ViewBag.endDate },
+                                         null)
+                    }
+                    else
+                    {                        
+                    @Html.ActionLink(@item.Institution as string,
+                                         "Index",
+                                         "ProgramPpass",
+                                         null,
+                                         null,
+                                         "tabs-1",
+                                         new { institutionID = @item.InstitutionID, startDate = @ViewBag.startDate, endDate = @ViewBag.endDate },
+                                         null)                           
+                    }
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td>
+                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+            </td>
+            <td>
+                <a href="#" id="@string.Format("event{0}", j)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now">
+                    @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                </a>
+            </td>
+            <td>
+                @if (!String.IsNullOrEmpty(@item.URI))
+                {
+                    //string fileName = string.Empty;
+                    //if (@item.URI != null)
+                    //{
+                    //    fileName = Path.GetFileName(@item.URI);
+                    //}
+
+                    if (@item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                    {
+                        if (!String.IsNullOrEmpty(@item.FileName))
+                        {
+                    @Html.ActionLink(@item.FileName as string,
+                                             "Index",
+                                             "DetailedFileUpass",
+                                             new
+                                             {
+                                                 InstitutionID = @item.InstitutionID,
+                                                 dateStartTicks = @item.DateStart.Ticks,
+                                                 URI = @item.URI,
+                                                 uniqueParticipantID = @item.UniqueParticipantID
+                                             },
+                                             null)
+                        }
+                        else
+                        {
+                    @Html.Raw("NA");
+                        }
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(@item.FileName))
+                        {
+                    @Html.ActionLink(@item.FileName as string,
+                                             "Index",
+                                             "DetailedFilePpass",
+                                             new
+                                             {
+                                                 InstitutionID = @item.InstitutionID,
+                                                 dateStartTicks = @item.DateStart.Ticks,
+                                                 URI = @item.URI,
+                                                 uniqueParticipantID = @item.UniqueParticipantID
+                                                 //TotalErrors = @item.TotalErrors 
+                                             },
+                                             null)
+                        }
+                        else
+                        {
+                    @Html.Raw("NA");
+                        }
+
+                    }
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.Requests)
+            </td>
+            @if (@item.TotalErrors > 0)
+            {
+                <td class="errors">
+                    @String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[ACK]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                           data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                           data-id10="@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)" \
+                           data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else if (@item.Acknowledged > 0)
+            {
+                <td class="acknowledged">
+                    @String.Format("ACKNOWLEDGED ({0:#,###0})", @item.ClearedErrors + @item.Acknowledged)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[CLEAR]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                       data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                       data-id10="@String.Format("ACKNOWLEDGED ({0:#,###0})", @item.ClearedErrors + @item.Acknowledged)" \
+                       data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+            {
+                <td class="warnings">
+                    @String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)
+                    <a href="#" id="@string.Format("clear{0}", j)" data-id="@item.Program" data-id2="@item.InstitutionID" \
+                       data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.DateStart.Ticks" data-id6="@item.ID">[UNCLEAR]</a>
+
+                    <a href="#" id="@string.Format("notes{0}", j)" data-id="@item.Program" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                       data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" data-id7="@item.EventID" data-id8="@item.ErrorID" data-id9="@item.ErrorDesc" \
+                       data-id10="@String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)" \
+                       data-id11="@item.DateStart.Ticks">[NOTES]</a>
+                </td>
+            }
+            else
+            {
+                <td class="non-error">Completed
+                </td>
+            }
+
+        </tr>
+        }
+    }
+</table>
+
+<div class="pager" style="font-size: .5em; margin-top: -5px;">
+    Page @(ViewBag.FilesPartial3.PageCount < ViewBag.FilesPartial3.PageNumber ? 0 : ViewBag.FilesPartial3.PageNumber) of @ViewBag.FilesPartial3.PageCount
+
+    @Html.PagedListPager(ViewBag.FilesPartial3 as PagedList.IPagedList<FunctionalDashboard.ViewModels.LogErrors>, page => Url.Action("FilesUpdatePartial3", "Home", new { page, sortOrder6 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea2" }))
+
+</div>
+
+
+
+
+@*<div class="pager" style="width: 45%; font-size: .5em; margin-top: -5px; text-align: left;">
+        Page @(ViewBag.Partial4.PageCount < ViewBag.Partial4.PageNumber ? 0 : ViewBag.Partial4.PageNumber) of @ViewBag.Partial4.PageCount
+
+        @Html.PagedListPager(ViewBag.Partial4 as PagedList.IPagedList<FunctionalDashboard.Models.LogErrors>, page => Url.Action("UpdatePartial", "Home", new { page, sortOrder = ViewBag.CurrentSort }),
+                                     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                          , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea2" }))
+
+
+    </div>*@

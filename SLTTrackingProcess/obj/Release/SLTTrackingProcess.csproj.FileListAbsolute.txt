@@ -1,0 +1,10 @@
+C:\FunctionalDashboard1.11\SLTTrackingProcess\bin\Release\SLTTrackingProcess.exe.config
+C:\FunctionalDashboard1.11\SLTTrackingProcess\bin\Release\SLTTrackingProcess.exe
+C:\FunctionalDashboard1.11\SLTTrackingProcess\bin\Release\SLTTrackingProcess.pdb
+C:\FunctionalDashboard1.11\SLTTrackingProcess\bin\Release\FunctionalDashboard.Dal.dll
+C:\FunctionalDashboard1.11\SLTTrackingProcess\bin\Release\FunctionalDashboard.Dal.pdb
+C:\FunctionalDashboard1.11\SLTTrackingProcess\obj\Release\SLTTrackingProcess.csprojResolveAssemblyReference.cache
+C:\FunctionalDashboard1.11\SLTTrackingProcess\obj\Release\SLTTrackingProcess.SLTTrackingProcessInstaller.resources
+C:\FunctionalDashboard1.11\SLTTrackingProcess\obj\Release\SLTTrackingProcess.csproj.GenerateResource.Cache
+C:\FunctionalDashboard1.11\SLTTrackingProcess\obj\Release\SLTTrackingProcess.exe
+C:\FunctionalDashboard1.11\SLTTrackingProcess\obj\Release\SLTTrackingProcess.pdb

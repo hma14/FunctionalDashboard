@@ -1,0 +1,51 @@
+﻿CREATE TABLE [dbo].[ESFileDefinitions] (
+    [id]              INT            IDENTITY (1, 1) NOT NULL,
+    [deleted]         INT            NULL,
+    [name]            VARCHAR (128)  NULL,
+    [field_names]     VARCHAR (1024) NULL,
+    [revision]        INT            NULL,
+    [ESFlatFileDelim] INT            NULL,
+    [f1]              INT            NULL,
+    [f2]              INT            NULL,
+    [f3]              INT            NULL,
+    [f4]              INT            NULL,
+    [f5]              INT            NULL,
+    [f6]              INT            NULL,
+    [f7]              INT            NULL,
+    [f8]              INT            NULL,
+    [f9]              INT            NULL,
+    [f10]             INT            NULL,
+    [f11]             INT            NULL,
+    [f12]             INT            NULL,
+    [f13]             INT            NULL,
+    [f14]             INT            NULL,
+    [f15]             INT            NULL,
+    [f16]             INT            NULL,
+    [f17]             INT            NULL,
+    [f18]             INT            NULL,
+    [f19]             INT            NULL,
+    [f20]             INT            NULL,
+    [f21]             INT            NULL,
+    [f22]             INT            NULL,
+    [f23]             INT            NULL,
+    [f24]             INT            NULL,
+    [f25]             INT            NULL,
+    [f26]             INT            NULL,
+    [f27]             INT            NULL,
+    [f28]             INT            NULL,
+    [f29]             INT            NULL,
+    [f30]             INT            NULL,
+    [f31]             INT            NULL,
+    [f32]             INT            NULL,
+    [f33]             INT            NULL,
+    [f34]             INT            NULL,
+    [f35]             INT            NULL,
+    [f36]             INT            NULL,
+    CONSTRAINT [PK_ESFileDefinitions] PRIMARY KEY CLUSTERED ([id] ASC)
+);
+
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IDX_ESFileDefinitions_Unique]
+    ON [dbo].[ESFileDefinitions]([name] ASC, [revision] ASC);
+

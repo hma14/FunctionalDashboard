@@ -1,0 +1,87 @@
+﻿@model FunctionalDashboard.ViewModels.UpassProgramFile
+@using FunctionalDashboard.Models
+@using FunctionalDashboard.Controllers
+
+
+@{
+    Layout = null;
+}
+
+
+@{
+    if (Model.Files != null)
+    {
+        int i = 0;
+        foreach (var file in Model.Files)
+        {
+            if (i > Logs.DropDwonListLength)
+            {
+                break;
+            }
+            i++;
+            if (file.LogLevel == EVENT_STATUS.ERROR || file.LogLevel == EVENT_STATUS.WARNING)
+            {
+                @Html.ActionLink(   file.Event +"  (" + file.EventID + ")  " + file.UniqueParticipantID, 
+                                    "Index", 
+                                    "DetailedFileUpass", 
+                                    new { 
+                                        InstitutionID = Model.InstitutionID,
+                                        dateStartTicks = file.ProcessTime.Ticks, 
+                                        uri = Model.URI, 
+                                        eventID = file.EventID,
+                                        uniqueParticipantID = file.UniqueParticipantID,
+                                        TotalErrors = Model.Errors 
+                                    }, 
+                                    new { @class = "error_links" })
+            }
+            else if (file.LogLevel == EVENT_STATUS.ACKNOWLEDGED)
+            {
+                @Html.ActionLink(   file.Event +"  (" + file.EventID + ")  " + file.UniqueParticipantID, 
+                                    "Index", 
+                                    "DetailedFileUpass", 
+                                    new { 
+                                        InstitutionID = Model.InstitutionID,
+                                        dateStartTicks = file.ProcessTime.Ticks, 
+                                        uri = Model.URI, 
+                                        eventID = file.EventID,
+                                        uniqueParticipantID = file.UniqueParticipantID,
+                                        TotalErrors = Model.Errors 
+                                    }, 
+                                    new { @class = "ack_links" })
+            }
+            else if (file.LogLevel == EVENT_STATUS.CLEARED)
+            {
+                @Html.ActionLink(file.Event + "  (" + file.EventID + ")  " + file.UniqueParticipantID,
+                                    "Index",
+                                    "DetailedFileUpass",
+                                    new
+                                    {
+                                        InstitutionID = Model.InstitutionID,
+                                        dateStartTicks = file.ProcessTime.Ticks,
+                                        uri = Model.URI,
+                                        eventID = file.EventID,
+                                        uniqueParticipantID = file.UniqueParticipantID,
+                                        TotalErrors = Model.Errors
+                                    },
+                                    new { @class = "warning_links" })
+            }
+            else
+            {
+                @Html.ActionLink(file.Event + "  (" + file.EventID + ")  " + file.UniqueParticipantID,   
+                                    "Index", 
+                                    "DetailedFileUpass", 
+                                    new { 
+                                        InstitutionID = Model.InstitutionID,
+                                        dateStartTicks = file.ProcessTime.Ticks, 
+                                        uri = Model.URI, 
+                                        eventID = file.EventID,
+                                        uniqueParticipantID = file.UniqueParticipantID,
+                                        TotalErrors = Model.Errors 
+                                    }, 
+                                    null)
+                
+            }            
+            <br />
+        }
+    }
+}

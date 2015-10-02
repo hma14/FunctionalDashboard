@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>FunctionalDashboard.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{dbd01d4e-641a-4a91-8085-717152003eac}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>FunctionalDashboard.Database</RootNamespace>
+    <AssemblyName>FunctionalDashboard.Database</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Staging|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'QA|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Deploy" />
+    <Folder Include="Deploy\1.5_data_migration" />
+    <Folder Include="Deploy\1.6_data_migration" />
+    <Folder Include="Deploy\1.7_data_migration" />
+    <Folder Include="Deploy\1.8_data_migration" />
+    <Folder Include="Deploy\1.9_data_migration" />
+    <Folder Include="Deploy\1.10_data_migration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\ESPerformance.sql" />
+    <Build Include="dbo\Tables\CPGFD_ErrorExceptions.sql" />
+    <Build Include="dbo\Tables\ESPerformanceCounter.sql" />
+    <Build Include="dbo\Tables\ESPerformanceCounterDesc.sql" />
+    <Build Include="dbo\Tables\ESPerformanceInstance.sql" />
+    <Build Include="dbo\Tables\ESPerformanceMapping.sql" />
+    <Build Include="dbo\Tables\ESPerformanceName.sql" />
+    <Build Include="dbo\Tables\ESPerformanceTrend.sql" />
+    <Build Include="dbo\Tables\ESPrintCost.sql" />
+    <Build Include="dbo\Tables\CategoryIDList.sql" />
+    <Build Include="dbo\Tables\ESPrintDocuments.sql" />
+    <Build Include="dbo\Tables\ESPrintPrinters.sql" />
+    <Build Include="dbo\Tables\CPGEnvironments.sql" />
+    <Build Include="dbo\Tables\ESPrintTracking.sql" />
+    <Build Include="dbo\Tables\ESAction.sql" />
+    <Build Include="dbo\Tables\ESPSTracking.sql" />
+    <Build Include="dbo\Tables\ESReportHistory.sql" />
+    <Build Include="dbo\Tables\ESActionRecipients.sql" />
+    <Build Include="dbo\Tables\ESScheduledTasks.sql" />
+    <Build Include="dbo\Tables\ESScheduledTasksHistory.sql" />
+    <Build Include="dbo\Tables\ESActionTriggerHistory.sql" />
+    <Build Include="dbo\Tables\EventIDList.sql" />
+    <Build Include="dbo\Tables\ESAppHistory.sql" />
+    <Build Include="dbo\Tables\ESScheduledTasksName.sql" />
+    <Build Include="dbo\Tables\ESAppName.sql" />
+    <Build Include="dbo\Tables\ESSearchAdvanced.sql" />
+    <Build Include="dbo\Tables\ESAppPublisher.sql" />
+    <Build Include="dbo\Tables\ESSearchSimple.sql" />
+    <Build Include="dbo\Tables\ESAppStatus.sql" />
+    <Build Include="dbo\Tables\ESServiceHistory.sql" />
+    <Build Include="dbo\Tables\ESArpHistory.sql" />
+    <Build Include="dbo\Tables\ESServiceKey.sql" />
+    <Build Include="dbo\Tables\ESArpStatus.sql" />
+    <Build Include="dbo\Tables\ESDiskspace.sql" />
+    <Build Include="dbo\Tables\ESServiceName.sql" />
+    <Build Include="dbo\Tables\ESDiskspaceLargeFiles.sql" />
+    <Build Include="dbo\Tables\ESDiskspaceStatus.sql" />
+    <Build Include="dbo\Tables\ESServiceStatus.sql" />
+    <Build Include="dbo\Tables\ESEnvironment.sql" />
+    <Build Include="dbo\Tables\ESSnmpCommunityUser.sql" />
+    <Build Include="dbo\Tables\ESEventlogAccountDomain.sql" />
+    <Build Include="dbo\Tables\ESSnmpTrapId.sql" />
+    <Build Include="dbo\Tables\ESEventlogAccountDomainGp.sql" />
+    <Build Include="dbo\Tables\ESSnmpTrapOid.sql" />
+    <Build Include="dbo\Tables\ESEventlogAccountGroup.sql" />
+    <Build Include="dbo\Tables\ESSnmpTraps.sql" />
+    <Build Include="dbo\Tables\ESEventlogAccountUser.sql" />
+    <Build Include="dbo\Tables\ESStrings.sql" />
+    <Build Include="dbo\Tables\ESEventlogCategory.sql" />
+    <Build Include="dbo\Tables\ESSysinfo.sql" />
+    <Build Include="dbo\Tables\ESSysinfoDiskCtrl.sql" />
+    <Build Include="dbo\Tables\ESEventlogComments.sql" />
+    <Build Include="dbo\Tables\ESSysinfoMemory.sql" />
+    <Build Include="dbo\Tables\ESEventlogComputer.sql" />
+    <Build Include="dbo\Tables\ESSysinfoNIC.sql" />
+    <Build Include="dbo\Tables\ESSysinfoPhysicalDrive.sql" />
+    <Build Include="dbo\Tables\ESEventlogData.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerDiskLogic.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerDiskPhysic.sql" />
+    <Build Include="dbo\Tables\ESEventlogEmail.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerFan.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerPSU.sql" />
+    <Build Include="dbo\Tables\ESEventlogFilename.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerRemoteMgmt.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerScsiCtrl.sql" />
+    <Build Include="dbo\Tables\ESEventlogFilepath.sql" />
+    <Build Include="dbo\Tables\ESSysinfoServerTempSensor.sql" />
+    <Build Include="dbo\Tables\ESSysinfoVirtualMachines.sql" />
+    <Build Include="dbo\Tables\ESEventlogFilter.sql" />
+    <Build Include="dbo\Tables\ESSysinfoWarranty.sql" />
+    <Build Include="dbo\Tables\ESEventlogGroup.sql" />
+    <Build Include="dbo\Tables\ESSyslogFacility.sql" />
+    <Build Include="dbo\Tables\ESEventlogGUID.sql" />
+    <Build Include="dbo\Tables\ESSyslogMain.sql" />
+    <Build Include="dbo\Tables\ESSyslogSeverity.sql" />
+    <Build Include="dbo\Tables\ESEventlogID.sql" />
+    <Build Include="dbo\Tables\ESTrackingAccountComputers.sql" />
+    <Build Include="dbo\Tables\ESEventlogLocation.sql" />
+    <Build Include="dbo\Tables\ESTrackingAccountGroups.sql" />
+    <Build Include="dbo\Tables\ESTrackingAccountUsers.sql" />
+    <Build Include="dbo\Tables\ESEventlogLocationMapping.sql" />
+    <Build Include="dbo\Tables\ESTrackingAuthFailure.sql" />
+    <Build Include="dbo\Tables\ESEventlogLog.sql" />
+    <Build Include="dbo\Tables\CPGFD_ErrorList.sql" />
+    <Build Include="dbo\Tables\ESTrackingLogonAuth.sql" />
+    <Build Include="dbo\Tables\ESTrackingLogonByType.sql" />
+    <Build Include="dbo\Tables\ESEventlogMain.sql" />
+    <Build Include="dbo\Tables\CPGFD_ErrorMsg.sql" />
+    <Build Include="dbo\Tables\ESTrackingPolicy.sql" />
+    <Build Include="dbo\Tables\ESEventlogPackage.sql" />
+    <Build Include="dbo\Tables\ESUptimeHistory.sql" />
+    <Build Include="dbo\Tables\ESVersion.sql" />
+    <Build Include="dbo\Tables\ESEventlogSID.sql" />
+    <Build Include="dbo\Tables\ESEventlogSource.sql" />
+    <Build Include="dbo\Tables\ESEventlogType.sql" />
+    <Build Include="dbo\Tables\NCSInfo.sql" />
+    <Build Include="dbo\Tables\ESEventlogUser.sql" />
+    <Build Include="dbo\Tables\ESEventlogUserDN.sql" />
+    <Build Include="dbo\Tables\ESFile.sql" />
+    <Build Include="dbo\Tables\CPGFD_KB.sql" />
+    <Build Include="dbo\Tables\ESFileDefinitions.sql" />
+    <Build Include="dbo\Tables\ESFileLDefinitions.sql" />
+    <Build Include="dbo\Tables\ESFileLookup1.sql" />
+    <Build Include="dbo\Tables\ESFileLookup2.sql" />
+    <Build Include="dbo\Tables\ESFileLookup3.sql" />
+    <Build Include="dbo\Tables\ESFileLookup4.sql" />
+    <Build Include="dbo\Tables\ESFileLookup5.sql" />
+    <Build Include="dbo\Tables\ESFileLookup6.sql" />
+    <Build Include="dbo\Tables\ESFileLookup7.sql" />
+    <Build Include="dbo\Tables\ESFileLookup8.sql" />
+    <Build Include="dbo\Tables\ESFileMain.sql" />
+    <Build Include="dbo\Tables\ESFileMainDelim.sql" />
+    <Build Include="dbo\Tables\ESFilemon.sql" />
+    <Build Include="dbo\Tables\ESFilemonHistory.sql" />
+    <Build Include="dbo\Tables\ESFolderStatus.sql" />
+    <Build Include="dbo\Tables\ESGroupMapping.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatHistory.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatLDescription.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatLStatus.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatLType.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatPingTracking.sql" />
+    <Build Include="dbo\Tables\ESHeartbeatStatus.sql" />
+    <Build Include="dbo\Tables\ESIPAddress.sql" />
+    <Build Include="dbo\Tables\ESLogonTracking.sql" />
+    <Build Include="dbo\Tables\ESMacAddress.sql" />
+    <Build Include="dbo\Tables\ESMacAddressVendor.sql" />
+    <Build Include="dbo\Tables\ESMotionTracking.sql" />
+    <Build Include="dbo\Tables\ESNessusKB.sql" />
+    <Build Include="dbo\Tables\ESNessusLog.sql" />
+    <Build Include="dbo\Tables\ESNessusPort.sql" />
+    <Build Include="dbo\Tables\ESObjectTracking.sql" />
+    <Build Include="dbo\Tables\ESPackageAssignments.sql" />
+    <Build Include="Security\BCTGTWDOM_achen.sql" />
+    <Build Include="Security\BCTGTWDOM_Compass Development Team SG.sql" />
+    <Build Include="Security\BCTGTWDOM_Domain Users.sql" />
+    <Build Include="Security\BCTGTWDOM_hema.sql" />
+    <Build Include="Security\BCTGTWDOM_svcCPGDash_dev.sql" />
+    <Build Include="Security\BCTGTWDOM_svcSCOrchestrator.sql" />
+    <Build Include="Security\BCTGTWDOM_svcEventSentry.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveNCSInfo.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateErrorList.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveErrorListRecords.sql" />
+    <Build Include="dbo\Stored Procedures\IsExistInErrorList.sql" />
+    <Build Include="dbo\Stored Procedures\InsertErrorMsg.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveCPGFD_ErrorMsg.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveErrorExceptions.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveErrorStatus.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveCPGFD_KB.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveEventSentryStatus.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateCPGFD_KB.sql" />
+    <None Include="Deploy\1.5_data_migration\01_cleanup.sql" />
+    <Build Include="Deploy\1.5_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.5_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.5_data_migration\04_data_initialization.sql" />
+    <Build Include="Deploy\1.5_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.5_data_migration\06_stored_procedures.sql" />
+    <Build Include="Deploy\1.5_data_migration\07_data_migration.sql" />
+    <Build Include="Deploy\1.5_data_migration\08_grants.sql" />
+    <Build Include="Deploy\1.5_data_migration\09_remove_backups.sql" />
+    <Build Include="Deploy\1.5_data_migration\10_database_documentation.sql" />
+    <Build Include="dbo\Tables\TL_EventLog.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveTLEventLog.sql" />
+    <None Include="Deploy\1.6_data_migration\01_cleanup.sql" />
+    <Build Include="Deploy\1.6_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.6_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.6_data_migration\04_data_initialization.sql" />
+    <Build Include="Deploy\1.6_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.6_data_migration\06_stored_procedures.sql" />
+    <None Include="Deploy\1.6_data_migration\07_data_migration.sql" />
+    <Build Include="Deploy\1.6_data_migration\08_grants.sql" />
+    <Build Include="Deploy\1.6_data_migration\09_remove_backups.sql" />
+    <Build Include="Deploy\1.6_data_migration\10_database_documentation.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveTLEventLogErrorDetail.sql" />
+    <None Include="Deploy\1.7_data_migration\01_cleanup.sql" />
+    <None Include="Deploy\1.7_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.7_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.7_data_migration\04_data_initialization.sql" />
+    <None Include="Deploy\1.7_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.7_data_migration\06_stored_procedures.sql" />
+    <None Include="Deploy\1.7_data_migration\07_data_migration.sql" />
+    <None Include="Deploy\1.7_data_migration\08_grants.sql" />
+    <None Include="Deploy\1.7_data_migration\09_remove_backups.sql" />
+    <None Include="Deploy\1.7_data_migration\10_database_documentation.sql" />
+    <Build Include="dbo\Tables\CPGFD_UsersInRoles.sql" />
+    <Build Include="dbo\Tables\CPGFD_Users.sql" />
+    <Build Include="dbo\Tables\CPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Tables\CPGFD_SLTRules.sql" />
+    <Build Include="dbo\Tables\CPGFD_Roles.sql" />
+    <Build Include="dbo\Views\view_ESStatus.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateCPGFD_SLTRules_By_NextTriggerDatetime.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveUserRole.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveCPGFD_SLTRules.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\InsertCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\ExistInCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\CheckSLTRuleIsActive.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveTrackingEntryFromTL_EventLog.sql" />
+    <Build Include="dbo\Stored Procedures\ClearFromCPGFD_SLTTracking.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateSLTRuleStatusById.sql" />
+    <None Include="Deploy\1.8_data_migration\01_cleanup.sql" />
+    <None Include="Deploy\1.8_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.8_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.8_data_migration\04_data_initialization.sql" />
+    <None Include="Deploy\1.8_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.8_data_migration\06_stored_procedures.sql" />
+    <None Include="Deploy\1.8_data_migration\07_data_migration.sql" />
+    <None Include="Deploy\1.8_data_migration\08_grants.sql" />
+    <None Include="Deploy\1.8_data_migration\09_remove_backups.sql" />
+    <None Include="Deploy\1.8_data_migration\10_database_documentation.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveSyncUtilityDetail.sql" />
+    <None Include="Deploy\1.9_data_migration\01_cleanup.sql" />
+    <None Include="Deploy\1.9_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.9_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.9_data_migration\04_data_initialization.sql" />
+    <None Include="Deploy\1.9_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.9_data_migration\06_stored_procedures.sql" />
+    <None Include="Deploy\1.9_data_migration\07_data_migration.sql" />
+    <None Include="Deploy\1.9_data_migration\08_grants.sql" />
+    <None Include="Deploy\1.9_data_migration\09_remove_backups.sql" />
+    <None Include="Deploy\1.9_data_migration\10_database_documentation.sql" />
+    <Build Include="dbo\Tables\LogSource.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllEventLogSource.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllActiveSLTRules.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllEventLogCategory.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllEventLogEventId.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateEventLogEventId.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateEventLogEventCategory.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveAllHHUDetails.sql" />
+    <Build Include="dbo\Stored Procedures\RetrieveHHUDetail.sql" />
+    <None Include="Deploy\1.10_data_migration\01_cleanup.sql" />
+    <None Include="Deploy\1.10_data_migration\02_backup.sql" />
+    <None Include="Deploy\1.10_data_migration\03_schema_migration.sql" />
+    <None Include="Deploy\1.10_data_migration\04_data_initialization.sql" />
+    <None Include="Deploy\1.10_data_migration\05_post_data_initializaion_schema_changes.sql" />
+    <None Include="Deploy\1.10_data_migration\06_stored_procedures.sql" />
+    <None Include="Deploy\1.10_data_migration\07_data_migration.sql" />
+    <None Include="Deploy\1.10_data_migration\08_grants.sql" />
+    <None Include="Deploy\1.10_data_migration\09_remove_backups.sql" />
+    <None Include="Deploy\1.10_data_migration\10_database_documentation.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="FunctionalDashboard.Database.refactorlog" />
+  </ItemGroup>
+</Project>

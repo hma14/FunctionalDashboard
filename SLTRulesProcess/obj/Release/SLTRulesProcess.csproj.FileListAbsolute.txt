@@ -1,0 +1,10 @@
+C:\FunctionalDashboard1.11\SLTRulesProcess\bin\Release\SLTRulesProcess.exe.config
+C:\FunctionalDashboard1.11\SLTRulesProcess\bin\Release\SLTRulesProcess.exe
+C:\FunctionalDashboard1.11\SLTRulesProcess\bin\Release\SLTRulesProcess.pdb
+C:\FunctionalDashboard1.11\SLTRulesProcess\bin\Release\FunctionalDashboard.Dal.dll
+C:\FunctionalDashboard1.11\SLTRulesProcess\bin\Release\FunctionalDashboard.Dal.pdb
+C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.csprojResolveAssemblyReference.cache
+C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.SLTRulesInstaller.resources
+C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.csproj.GenerateResource.Cache
+C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.exe
+C:\FunctionalDashboard1.11\SLTRulesProcess\obj\Release\SLTRulesProcess.pdb

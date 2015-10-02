@@ -1,0 +1,17 @@
+﻿@model PagedList.IPagedList<FunctionalDashboard.Dal.DataEntity.GeneralEventLog>
+
+
+
+@if (ViewBag.Message != null)
+{
+    <p style="color: red;">Error: @ViewBag.Message</p>
+}
+
+
+<div id="updateArea">
+    @Html.Partial("_AjaxUpdatePartial", Model)
+</div>
+
+
+
+

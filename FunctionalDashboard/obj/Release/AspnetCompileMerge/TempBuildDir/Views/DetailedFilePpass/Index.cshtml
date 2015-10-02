@@ -1,0 +1,12 @@
+﻿@model  PagedList.IPagedList<FunctionalDashboard.Models.PpassEventLog>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Detailed - File (PPASS)";
+}
+
+<div id="FileDetails">
+    @Html.Partial("_FileDetails", Model)
+</div>

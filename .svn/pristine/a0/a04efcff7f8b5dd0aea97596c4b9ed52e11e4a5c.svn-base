@@ -1,0 +1,387 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using FunctionalDashboard.Controllers;
+
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/FilesUpass.js" type="text/javascript"></script>
+
+<div id="spinnerFileUpass" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+<h5>Program - Files View (UPASS)</h5>
+<div>
+    <div style="float: left; width: 50%;">
+        <div style="float: left; width: 90%;">
+
+            <table class="table_short">
+                <caption class="caption">NCS Detail</caption>
+                <tr>
+                    <td class="bold">Program Name</td>                   
+                    <td>@ViewBag.Program</td>
+                </tr>
+                <tr>
+                    <td class="bold">NCS Organisation Name</td>
+                    <td>@ViewBag.Institution</td>
+                </tr>
+                <tr>
+                    <td class="bold">NCS Customer ID</td>
+                    <td>@ViewBag.NCSCustomerID</td>
+                </tr>
+                <tr>
+                    <td class="bold">NCS Customer Assigned ID</td>
+                    <td>@ViewBag.ShortName</td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div style="float: left; width: 90%;">
+
+            <table class="table_short">
+                <caption class="caption">File Summary</caption>
+                <tr>
+                    <td class="bold" >Total Eligibility Requests</td>
+                    <td>@String.Format("{0:#,###0}", @ViewBag.TotalEligibilityRequests)</td>
+
+                </tr>
+
+                <tr>
+                    <td class="bold">Errors (Acknowledged or Cleared)</td>
+                    @if (@ViewBag.TotalErrors > 0)
+                    {
+                        <td class="errors">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                        </td>
+                    }
+                    else if ( @ViewBag.TotalAcknowledged > 0)
+                    {
+                        <td class="acknowledged">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                        </td>
+                    }                    
+                    else if (@ViewBag.TotalAcknowledged == 0 && @ViewBag.TotalErrors == 0 && @ViewBag.TotalClearedErrors > 0)
+                    {
+                        <td class="warnings">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors)
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="non-error">@ViewBag.TotalErrors</td>
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div style="float: right; width: 40%;">
+        @using (Ajax.BeginForm("UpdateRetrievedResult", "ProgramUpass", new { sortOrder2 = ViewBag.StatusSortParm }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateAreaFile",
+        OnSuccess = "$('input#EndDatepickerUpassFile').UpdateDateStatus({ start: $('input#StartDatepickerUpassFile').val(), end: $('input#EndDatepickerUpassFile').val() })"
+    }))
+        {
+            <table class="datepickers">
+                <tr >
+                    <td>Request Start:
+                        <input type="text" id="StartDatepickerUpassFile" class="datefield" name="startDate" value="@Session["StartDate"]"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Request End:
+                        <input type="text" id="EndDatepickerUpassFile" class="datefield" name="endDate" value="@Session["EndDate"]" />
+                    </td>
+                    <td>
+                        <input class="btn_short" id="submitUpassFile" type="submit" value="Select Date Range" name="SelectDate" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div style="float: right; width: 40%;">
+
+
+        @using (Ajax.BeginForm("SearchFileName", "ProgramUpass", null, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateAreaFile"
+    }))
+        {
+            <table class="searchs">
+                <tr style="float: right;">
+                    <td>
+                        File Name: @Html.TextBox("FileName", ViewBag.fileName as string, new { @class = "searchTextBox"})
+                    </td>
+                    <td>
+                        <input class="btn_short" id="SearchFileName" type="submit" value="Search" name="SearchFileName" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+        @using (Ajax.BeginForm("SearchUniqueParticipantID", "ProgramUpass", null, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateAreaFile"
+    }))
+        {
+            <table class="searchs">
+                <tr style="float: right">
+                    <td>
+                        UniqueParticipant(GUID) ID: @Html.TextBox("UniqueParticipantID", ViewBag.uniqueParticipantID as string, new { @class = "searchTextBox" })
+                    </td>
+                    <td>
+                        <input class="btn_short" id="SearchUniqueParticipantID" type="submit" value="Search" name="SearchUniqueParticipantID" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+
+        
+        <table class="toPdfLink">
+            <tr>
+                @*<td>
+                    @using (Html.BeginForm("ExportFilePDF", "ProgramUpass", FormMethod.Post, null))
+                    {
+                        <input class="btn_short" id="ExportFilePDF" type="submit" value="Export to PDF" />
+                    }
+                </td>*@
+                <td>
+                    @using (Html.BeginForm("ExportFileExcel", "ProgramUpass", FormMethod.Post, null))
+                    {
+                        <input class="btn_short" id="ExportFileExcel" type="submit" value="Export to Excel" />
+                    }
+                </td>  
+            </tr>
+        </table>
+  
+    </div>
+    @{int rowNo = 0;}
+    @{int f = 0;}
+    @if (ViewBag.SearchResult == null)
+    {
+        <div class="RetrievedResult">
+            <table class="table_short">
+                <caption class="caption">Requests Per File</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Date Time Start", "UpdateRetrievedResult", new { sortOrder = ViewBag.DateTimeStartSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+                    <th class="fixed_column_length_500">
+                        @Ajax.ActionLink("File Name", "UpdateRetrievedResult", new { sortOrder = ViewBag.FileNameSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+
+                    </th>
+                    <th  class="fixed_column_length_150">
+                        @Ajax.ActionLink("Requests", "UpdateRetrievedResult", new { sortOrder = ViewBag.RequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+                    <th>
+                        Elapsed Time
+                    </th>
+                    <th class="fixed_column_length_500">
+                        @Ajax.ActionLink("Status (Acknowledged or Cleared)", "UpdateRetrievedResult", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+
+                </tr>               
+
+                @foreach (var item in ViewBag.RetrievedResult)
+                {
+                    f += 1;
+                    <tr>
+                        <td>
+                            @item.DateStart.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                        </td>
+                        <td>
+                            @item.FileName
+                            <a href="#" id="@string.Format("file{0}", f)" data-id="@item.DateStart.Ticks" data-id2="@item.FileName" data-id3="@item.ID">[+]</a>
+                            <div id="@string.Format("files{0}", f)"></div>                          
+                        </td>
+                        <td>
+                            @String.Format("{0:#,###0}", @item.Requests)
+                        </td>
+                        <td>
+                           @{
+                                var ts = ((ProgramUpassController)this.ViewContext.Controller).GetElapsedTime(@item.Files);
+                                @Html.Raw(ts.Duration());
+                            }
+                        </td>
+                        @if (@item.Errors > 0)
+                        {
+                            <td class="errors">@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.Errors, @item.Acknowledged + @item.ClearedErrors) 
+                                <a id=@(rowNo += 1) class="errorlink" href="#">Description and StackTrace</a>
+                                <p class="error_description">
+                                    @item.ErrorDescr<br />
+                                    <b>Stack Trace: </b>
+                                    <br />@item.StackTrace
+                                </p>
+                            </td>
+                        }
+                        else if (@item.Acknowledged > 0)
+                        {
+                            <td class="acknowledged">
+                                @String.Format("ACKNOWLEDGED {0:#,###0} ({1:#,###0})", @item.Errors, @item.Acknowledged + @item.ClearedErrors)
+                            </td>
+                        }
+                        else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+                        {
+                            <td class="warnings">
+                                @String.Format("CLEARED {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="non-error">Completed
+                            </td>
+                        }
+
+                    </tr>
+                }
+
+            </table>
+
+
+            <div class="pager" style="font-size: .5em; margin-top: -5px;">
+                Page @(ViewBag.RetrievedResult.PageCount < ViewBag.RetrievedResult.PageNumber ? 0 : ViewBag.RetrievedResult.PageNumber) of @ViewBag.RetrievedResult.PageCount
+
+                @Html.PagedListPager(ViewBag.RetrievedResult as PagedList.IPagedList<FunctionalDashboard.ViewModels.UpassProgramFile>, page => Url.Action("UpdateRetrievedResult", "ProgramUpass", new { page, sortOrder = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateAreaFile" }))
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="searchResult">
+            <table class="table_short" style="clear: both;">
+                <caption class="caption">Search Results for <strong>@ViewBag.ShortName</strong>: <strong style="font-size: 1em; color: red;">@Session["Keyword"]</strong></caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Date Time Start", "UpdateSearchResult", new { sortOrder = ViewBag.DateTimeStartSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+                    <th class="fixed_column_length_500">
+                        @Ajax.ActionLink("File Name", "UpdateSearchResult", new { sortOrder = ViewBag.FileNameSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Requests", "UpdateSearchResult", new { sortOrder = ViewBag.RequestsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+                    <th>
+                        Elapsed Time
+                    </th>
+                    <th class="fixed_column_length_500">
+                        @Ajax.ActionLink("Status", "UpdateSearchResult", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateAreaFile"
+       })
+                    </th>
+                </tr>
+
+                @foreach (var item in ViewBag.SearchResult)
+                {
+                    f += 1;
+                    <tr>
+                        <td>
+                            @item.DateStart.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                        </td>
+                        <td>
+                        @item.FileName
+                            <a href="#" id="@string.Format("file{0}", f)" data-id="@item.DateStart.Ticks" data-id2="@item.FileName"  data-id3="@item.ID">[+]</a>
+                            <div id="@string.Format("files{0}", f)"></div>                         
+                        </td>
+
+                        <td>
+                            @String.Format("{0:#,###0}", @item.Requests)
+                        </td>
+                        <td>
+                            @{
+                                var ts = ((ProgramUpassController)this.ViewContext.Controller).GetElapsedTime(@item.Files);
+                                @Html.Raw(ts.Duration());
+                            }
+                        </td>
+                        @if (@item.Errors > 0)
+                        {
+                            <td class="errors">@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.Errors, @item.Acknowledged + @item.ClearedErrors)  
+                                <a id=@(rowNo += 1) class="errorlink" href="#">Description and StackTrace</a>
+                                <p class="error_description">
+                                    @item.ErrorDescr<br />
+                                    <b>Stack Trace: </b>
+                                    <br />@item.StackTrace
+                                </p>
+                            </td>
+                        }
+                        else if (@item.Acknowledged > 0)
+                        {
+                            <td class="acknowledged">
+                                @String.Format("ACKNOWLEDGED {0:#,###0} ({1:#,###0})", @item.Errors, @item.Acknowledged + @item.ClearedErrors)
+                            </td>
+                        }
+                        else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+                        {
+                            <td class="warnings">
+                                @String.Format("CLEARED {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="non-error">Completed
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+
+            <div class="pager" style="font-size: .5em; margin-top: -5px;">
+                Page @(ViewBag.SearchResult.PageCount < ViewBag.SearchResult.PageNumber ? 0 : ViewBag.SearchResult.PageNumber) of @ViewBag.SearchResult.PageCount
+
+                @Html.PagedListPager(ViewBag.SearchResult as PagedList.IPagedList<FunctionalDashboard.ViewModels.UpassProgramFile>, page => Url.Action("UpdateSearchResult", "ProgramUpass", new { page, sortOrder = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateAreaFile" }))
+
+            </div>
+        </div>
+    }
+</div>
+

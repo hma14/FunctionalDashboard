@@ -1,0 +1,658 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using FunctionalDashboard.Models;
+@using FunctionalDashboard.Controllers;
+
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/EventsTabWS.js" type="text/javascript"></script>
+
+
+<div id="spinner3" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+<div>
+    @using (Ajax.BeginForm("WSUpdatePartial", "Home", new { sortOrder7 = ViewBag.StatusSortParm }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateArea3",
+        OnSuccess = "$('input#EndDatepicker3').UpdateDateStatus({ start: $('input#StartDatepicker3').val(), end: $('input#EndDatepicker3').val() })"
+    }))
+    {
+        <table class="datepickers">
+            <tr>
+                <td>Request Start:
+                    <input style="width:185px;margin:2px;" type="text" id="StartDatepicker3" class="datefield" name="startDate" value="@Session["StartDate"]" />
+                </td>
+            </tr>
+            <tr>
+                <td>Request End:
+                    <input style="width:185px;margin:2px;" type="text" id="EndDatepicker3" class="datefield" name="endDate" value="@Session["EndDate"]" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn_short" id="submit3" type="submit" value="Select Date Range" name="SelectDate" style="clear: both; float: right; margin: 2px;" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div class="monitor_tables">
+
+    <table class="table_short" style="clear: both;">
+        <caption class="caption">PPASS</caption>
+        <tr>
+            <th>
+                @Ajax.ActionLink("NCS Customer ID", "WSUpdatePartial1", new { sortOrder7 = ViewBag.NCSCustomerIDSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+
+            </th>
+            <th class="fixed_column_length_50">
+                @Ajax.ActionLink("Program", "WSUpdatePartial1", new { sortOrder7 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+
+            </th>
+            <th class="fixed_column_length_200">
+                @Ajax.ActionLink("Institution", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            </th>
+            <th class="fixed_column_length_200">
+                @Ajax.ActionLink("Errors (Cleared)", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.TotalErrorsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            </th>
+            <th>
+                @Ajax.ActionLink("New Card", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.NewCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+                (<span class="event_id">24</span>)
+            </th>
+            <th>
+                @Ajax.ActionLink("Terminate Card", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.TerminateCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+                (<span class="event_id">28</span>)
+            </th>
+            <th>
+                @Ajax.ActionLink("Replacement Card", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.ReplacementCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+                (<span class="event_id">25</span>)
+            </th>
+            <th>
+                @Ajax.ActionLink("Suspend Card", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.SuspendCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+                (<span class="event_id">27</span>)
+            </th>
+            <th>
+                @Ajax.ActionLink("Resume Card", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.ResumeCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+                (<span class="event_id">26</span>)
+            </th>
+
+            @foreach (var item in ViewBag.WSPartial1)
+            {
+                <tr>
+
+                    <td>
+                        @item.NCSCustomerID
+                    </td>
+                    <td>
+                        @item.Program
+                    </td>
+                    <td>
+                        @if (item.Institution != null)
+                        {
+                            if (item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                            {
+                            @Html.ActionLink(@item.Institution as string,
+                                             "WebServices",
+                                             "ProgramUpass",
+                                             null, null,
+                                             "tabs-2",
+                                             new
+                                             {
+                                                 institutionID = @item.InstitutionID,
+                                                 startDate = @ViewBag.startDate,
+                                                 endDate = @ViewBag.endDate
+                                             },
+                                             null)
+                            }
+                            else
+                            {
+                            @Html.ActionLink(@item.Institution as string,
+                                             "WebServices",
+                                             "ProgramPpass",
+                                             null, null,
+                                             "tabs-2",
+                                             new
+                                             {
+                                                 institutionID = @item.InstitutionID,
+                                                 startDate = @ViewBag.startDate,
+                                                 endDate = @ViewBag.endDate
+                                             },
+                                             null)
+                            }
+                        }
+                        else
+                        {
+                            @Html.Raw("NA")
+                        }
+                    </td>
+                    @if (@item.TotalErrors > 0)
+                    {
+                        <td class="errors">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                        </td>
+                    }
+                    else if (@item.Acknowledged > 0)
+                    {
+                        <td class="acknowledged">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors,  @item.ClearedErrors + @item.Acknowledged)
+                        </td>
+                    }
+                    else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+                    {
+                        <td class="warnings">
+                            @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors,  @item.ClearedErrors)
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="non-error">
+                            @item.TotalErrors
+                        </td>
+                    }
+                    <td>
+                        @String.Format("{0:#,###0}", @item.NewCards)
+                    </td>
+
+                    <td>
+                        @String.Format("{0:#,###0}", @item.TerminateCards)
+                    </td>
+                    <td>
+                        @String.Format("{0:#,###0}", @item.ReplacementCards)
+                    </td>
+                    <td>
+                        @String.Format("{0:#,###0}", @item.SuspendCards)
+                    </td>
+                    <td>
+                        @String.Format("{0:#,###0}", @item.ResumeCards)
+                    </td>
+
+                </tr>
+            }
+    </table>
+    <div class="pager" style="font-size: .5em; margin-top: -5px;">
+        Page @(ViewBag.WSPartial1.PageCount < ViewBag.WSPartial1.PageNumber ? 0 : ViewBag.WSPartial1.PageNumber) of @ViewBag.WSPartial1.PageCount
+
+        @Html.PagedListPager(ViewBag.WSPartial1 as PagedList.IPagedList<FunctionalDashboard.ViewModels.PpassWebServiceErrors>, page => Url.Action("WSUpdatePartial1", "Home", new { page, sortOrder7 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea3" }))
+
+    </div>
+
+</div>
+
+<table class="table_short" style="clear: both; width: 100%;">
+    <caption class="caption">UPASS</caption>
+    <tr>
+        <th class="fixed_column_length_100">
+            @Ajax.ActionLink("NCS Customer ID", "WSUpdatePartial2", new { sortOrder8 = ViewBag.NCSCustomerIDSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+
+        </th>
+        <th class="fixed_column_length_50">
+            @Ajax.ActionLink("Program", "WSUpdatePartial2", new { sortOrder8 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+
+        </th>
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("Institution", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("Errors (Cleared)", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.TotalErrorsSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+
+
+        <th>
+            @Ajax.ActionLink("Waive Benefit", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.WaiveBenefitSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id">32</span>)
+        </th>
+
+        <th>
+            @Ajax.ActionLink("Elect Benefit", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.ElectBenefitSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id">31</span>)
+        </th>
+        <th>
+            @Ajax.ActionLink("Link Card", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.LinkCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id">29</span>)
+        </th>
+        <th>
+            @Ajax.ActionLink("Unlink Card", "WSUpdatePartial2", "Home", new { sortOrder8 = ViewBag.UnlinkCardSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id">30</span>)
+        </th>
+        <th>
+            @Ajax.ActionLink("Web Services", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.WebServicesSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id">50</span>)
+        </th>
+        <th>
+            @Ajax.ActionLink("Others", "WSUpdatePartial1", "Home", new { sortOrder7 = ViewBag.WebServicesSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+
+    </tr>
+
+    @foreach (var item in ViewBag.WSPartial2)
+    {
+        <tr>
+            <td>
+                @item.NCSCustomerID
+            </td>
+            <td>
+                @item.Program
+            </td>
+            <td>
+                @if (item.Institution != null)
+                {
+                    @Html.ActionLink(@item.Institution as string,
+                                         "WebServices",
+                                         "ProgramUpass",
+                                         null, null,
+                                         "tabs-2",
+                                         new
+                                         {
+                                             institutionID = @item.InstitutionID,
+                                             startDate = @ViewBag.startDate,
+                                             endDate = @ViewBag.endDate
+                                         },
+                                         null)
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            @if (@item.TotalErrors > 0)
+            {
+                <td class="errors">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.ClearedErrors + @item.Acknowledged)
+                </td>
+            }
+            else if (@item.Acknowledged > 0)
+            {
+                <td class="acknowledged">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors,  @item.ClearedErrors + @item.Acknowledged)
+                </td>
+            }
+            else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+            {
+                <td class="warnings">
+                    @String.Format("{0:#,###0} ({1:#,###0})", @item.TotalErrors,  @item.ClearedErrors)
+                </td>
+            }
+            else
+            {
+                <td class="non-error">
+                    @item.TotalErrors
+                </td>
+            }
+            <td>
+                @String.Format("{0:#,###0}", @item.WaiveBenefits)
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.ElectBenefits)
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.LinkCards)
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.UnlinkCards)
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.UpassWebServices)
+            </td>
+            <td>
+                @String.Format("{0:#,###0}", @item.Others)
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<div class="pager" style="font-size: .5em; margin-top: -5px;">
+    Page @(ViewBag.WSPartial2.PageCount < ViewBag.WSPartial2.PageNumber ? 0 : ViewBag.WSPartial2.PageNumber) of @ViewBag.WSPartial2.PageCount
+
+    @Html.PagedListPager(ViewBag.WSPartial2 as PagedList.IPagedList<FunctionalDashboard.ViewModels.UpassWebServiceErrors>, page => Url.Action("WSUpdatePartial2", "Home", new { page, sortOrder8 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                              , new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "updateArea3" }))
+
+</div>
+
+
+
+
+<table class="table_short" style="clear: both; width: 100%;">
+    <caption class="caption">Current Web Service Stream</caption>
+    <tr>
+        <th class="fixed_column_length_150">
+            @Ajax.ActionLink("Date Time Start", "WSUpdatePartial3", new { sortOrder9 = ViewBag.DateTimeStartSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+        <th class="fixed_column_length_50">
+            @Ajax.ActionLink("Program", "WSUpdatePartial3", new { sortOrder9 = ViewBag.ProgramSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+
+        </th>
+        <th class="fixed_column_length_150">
+            @Ajax.ActionLink("Institution", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.InstitutionSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+        <th class="fixed_column_length_150">
+            @Ajax.ActionLink("Category", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.CategorySortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id_bold">id</span>)
+        </th>
+        <th class="fixed_column_length_300">
+            @Ajax.ActionLink("Event", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.EventSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+            (<span class="event_id_bold">id</span>)
+        </th>
+
+        <th class="fixed_column_length_200">
+            @Ajax.ActionLink("GUID", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.GUIDSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+        <th class="fixed_column_length_100">Elapased Time
+                @*@Ajax.ActionLink("ElapsedTime", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.ElapsedTimeSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })*@
+        </th>
+        <th class="fixed_column_length_150">
+            @Ajax.ActionLink("Status", "WSUpdatePartial3", "Home", new { sortOrder9 = ViewBag.StatusSortParm }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "updateArea3"
+       })
+        </th>
+
+    </tr>
+    @{ 
+        int j = 9;
+        int k = 30;
+     }
+    @foreach (var item in ViewBag.WSPartial3)
+    {
+        j += 1;
+        k += 1;
+        <tr>
+            <td>
+                @item.DateStart.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+            </td>
+            <td>
+                @item.Program
+            </td>
+            <td>
+                @if (item.Institution != null)
+                {
+                    if (item.Program == FunctionalDashboard.Models.PROGRAM_ID.UPASS)
+                    {
+                    @Html.ActionLink(@item.Institution as string,
+                                             "WebServices",
+                                             "ProgramUpass",
+                                             null, null,
+                                             "tabs-2",
+                                             new
+                                             {
+                                                 institutionID = @item.InstitutionID,
+                                                 startDate = @ViewBag.startDate,
+                                                 endDate = @ViewBag.endDate
+                                             },
+                                             null)
+                    }
+                    else
+                    {
+                    @Html.ActionLink(@item.Institution as string,
+                                             "WebServices",
+                                             "ProgramPpass",
+                                             null, null,
+                                             "tabs-2",
+                                             new
+                                             {
+                                                 institutionID = @item.InstitutionID,
+                                                 startDate = @ViewBag.startDate,
+                                                 endDate = @ViewBag.endDate
+                                             },
+                                             null)
+                    }
+                }
+                else
+                {
+                    @Html.Raw("NA")
+                }
+            </td>
+            <td>
+                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+            </td>
+            <td>
+                <a href="#" id="@string.Format("event{0}", k)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now"> 
+                            @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                </a>
+                <a href="#" id="@string.Format("cate{0}", j)"  data-id="@item.ID">[+]</a>
+                <div id="@string.Format("events{0}", j)"></div>
+            </td>
+            <td>
+                @{
+                     if (!String.IsNullOrEmpty(@item.GUID))
+                     { 
+                        if (@item.Program == PROGRAM_ID.UPASS)
+                        {                      
+                            @Html.ActionLink(String.Format("{0}", @item.GUID) as String,
+                                                "Index",
+                                                "UpassUserDetail",
+                                                new
+                                                {                                                       
+                                                    institutionID = @item.InstitutionID,
+                                                    guid = @item.GUID,
+                                                    csn = @item.CardSerialNumber,
+                                                },
+                                                null)
+                      
+                        }
+                        else{ // PPASS
+                        
+                            if (!String.IsNullOrEmpty(@item.GUID))
+                            { 
+                                @Html.ActionLink(String.Format("{0}", @item.GUID) as String,
+                                                "Index",
+                                                "PpassUserDetail",
+                                                new
+                                                {                                                       
+                                                    institutionID = @item.InstitutionID,
+                                                    uniqueParticipantID = @item.GUID,
+                                                    csn = @item.CardSerialNumber,
+                                                },
+                                                null)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @item.GUID
+                    }                   
+                }
+            </td>
+            <td>
+                @{
+                    var ts = ((HomeController)this.ViewContext.Controller).GetElapsedTime(@item.Events);
+                    @Html.Raw(ts.Duration());
+                }
+            </td>
+            @if (item.TotalErrors > 0)
+            {
+                <td class="errors">                   
+                    @String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.TotalErrors, @item.Acknowledged + @item.ClearedErrors)
+                    @*<a  href="#" id="@string.Format("clear{0}", k)" data-id="@item.CategoryID" data-id2="@item.EventID" data-id3="@item.DateStart.Ticks">[ACK]</a> *@                  
+                    @*<a  href="#" id="@string.Format("notes{0}", k)">[NOTES]</a>*@
+                </td>
+            }
+            else if (@item.Acknowledged > 0)
+            {
+                <td class="acknowledged">
+                    @String.Format("ACKNOWLEDGED ({0:#,###0})", @item.ClearedErrors + @item.Acknowledged)
+                   @* <a   href="#" id="@string.Format("clear{0}", k)" data-id="@item.CategoryID" data-id2="@item.EventID" data-id3="@item.DateStart.Ticks">[CLEAR]</a>*@
+                    @*<a   href="#" id="@string.Format("notes{0}", k)">[NOTES]</a>*@
+                </td>
+            }
+            else if (@item.Acknowledged == 0 && @item.TotalErrors == 0 && @item.ClearedErrors > 0)
+            {
+                <td class="warnings">
+                    @String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)                    
+                    @*<a  href="#" id="@string.Format("clear{0}", k)" data-id="@item.CategoryID" data-id2="@item.EventID" data-id3="@item.DateStart.Ticks">[UNCLEAR]</a>*@
+                    @*<a  href="#" id="@string.Format("notes{0}", k)">[NOTES]</a>*@
+                 </td>
+            }            
+            else
+            {
+                <td class="non-error">Completed
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<div class="pager" style="font-size: .5em; margin-top: -5px;">
+    Page @(ViewBag.WSPartial3.PageCount < ViewBag.WSPartial3.PageNumber ? 0 : ViewBag.WSPartial3.PageNumber) of @ViewBag.WSPartial3.PageCount
+
+    @Html.PagedListPager(ViewBag.WSPartial3 as PagedList.IPagedList<FunctionalDashboard.ViewModels.WebServiceOperationStatus>, page => Url.Action("WSUpdatePartial3", "Home", new { page, sortOrder9 = ViewBag.CurrentSort }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea3" }))
+
+</div>
+
+
+
+
+
+
+@*<div class="pager" style="width: 45%; font-size: .5em; margin-top: -5px; text-align: left;">
+        Page @(ViewBag.Partial4.PageCount < ViewBag.Partial4.PageNumber ? 0 : ViewBag.Partial4.PageNumber) of @ViewBag.Partial4.PageCount
+
+        @Html.PagedListPager(ViewBag.Partial4 as PagedList.IPagedList<FunctionalDashboard.Models.LogErrors>, page => Url.Action("UpdatePartial", "Home", new { page, sortOrder = ViewBag.CurrentSort }),
+                                     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                          , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "updateArea" }))
+
+
+    </div>*@

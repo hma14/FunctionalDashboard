@@ -1,0 +1,59 @@
+﻿@using FunctionalDashboard.Models
+@using PagedList.Mvc;
+@using PagedList;
+@using System.Collections
+@using FunctionalDashboard.Dal.DataEntity
+
+<link rel="stylesheet" href="~/Content/popBox.css" type="text/css" />
+<script src="~/Scripts/popBox.js" type="text/javascript"></script>
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/EventsTabApp.js" type="text/javascript"></script>
+<script src="~/Scripts/KnowledgeBasePopup.js" type="text/javascript"></script>
+
+
+<div id="spinner4" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+
+<div>
+    @using (Ajax.BeginForm("AppUpdatePartial", "Home", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateArea41",
+        OnSuccess = "$('input#EndDatepicker4').UpdateDateStatus({ start: $('input#StartDatepicker4').val(), end: $('input#EndDatepicker4').val() }); $('input#EndDatepicker4').UpdatePartialViews({ start: $('input#StartDatepicker4').val(), end: $('input#EndDatepicker4').val(), updateArea: 'updateArea42', callBack: 'AppSyncUtilityOnDateRangeChanges' }); $('input#EndDatepicker4').UpdatePartialViews({ start: $('input#StartDatepicker4').val(), end: $('input#EndDatepicker4').val(), updateArea: 'updateArea43', callBack: 'AppHHUOnDateRangeChanges' })"
+    }))
+    {
+        <table class="datepickers">
+            <tr>
+                <td>Request Start:
+                    <input style="width:185px;margin:2px;" type="text" id="StartDatepicker4" class="datefield" name="startDate" value="@Session["StartDate"]" />
+                </td>
+            </tr>
+            <tr>
+                <td>Request End: 
+                    <input style="width:185px;margin:2px;" type="text" id="EndDatepicker4" class="datefield" name="endDate" value="@Session["EndDate"]" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn_short" id="submit4" type="submit" value="Select Date Range" name="SelectDate" style="clear: both; float: right; margin: 2px;" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+
+<table>
+    <tr>
+        <td>
+            <a id="ShowStatus" href="#" style="font-size: 0.8em; color: #8A2908; padding-right: 10px;">Show EventSentry Status</a>
+        </td>
+        <td>
+            <div id="EventSentryStatus" style="width: 600px; padding-left: 10px;"></div>
+        </td>
+    </tr>
+</table>
+

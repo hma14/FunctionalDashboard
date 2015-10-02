@@ -1,0 +1,293 @@
+﻿<h5>Program - Web Service View (PPASS)</h5>
+
+<div>
+    <div style="float: left; width: 60%;">
+
+        <table class="table_short">
+            <caption class="caption">NCS Detail</caption>
+            <tr>
+                <td class="bold" style="width: 50%;">Program Name</td>
+                @if (ViewBag.WSRetrievedResult.Count > 0)
+                {
+                    <td>@ViewBag.WSRetrievedResult[0].Program</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+            <tr>
+                <td class="bold">NCS Organisation Name</td>
+                @if (ViewBag.WSRetrievedResult.Count > 0)
+                {
+                    <td>@ViewBag.WSRetrievedResult[0].Name</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+            <tr>
+                <td class="bold">NCS Customer ID</td>
+                @if (ViewBag.WSRetrievedResult.Count > 0)
+                {
+                    <td>@ViewBag.WSRetrievedResult[0].OrganizationId</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+            <tr>
+                <td class="bold">NCS Customer Assigned ID</td>
+                @if (ViewBag.WSRetrievedResult.Count > 0)
+                {
+                    <td>@ViewBag.WSRetrievedResult[0].ShortName</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        </table>
+    </div>
+
+    <div style="float: right; width: 40%;">
+        <table class="datepickers_pdf">
+            <tr>
+                <td>Request Start: &nbsp; <span class="StartEndDatePDF">@ViewBag.startDate</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Request End: &nbsp;&nbsp;&nbsp;<span class="StartEndDatePDF">@ViewBag.endDate</span>
+                </td>
+            </tr>
+        </table>
+
+        
+    </div>
+
+    <div style="float: left; width: 60%;">
+
+        <table class="table_short">
+            <caption class="caption">Summary</caption>
+
+            <tr>
+                <td class="bold">New Card</td>
+                <td>@ViewBag.NewCard</td>
+            </tr>
+            <tr>
+                <td class="bold">Terminated Card</td>
+                <td>@ViewBag.TerminatedCard</td>
+            </tr>
+            <tr>
+                <td class="bold">Replacement Card</td>
+                <td>@ViewBag.ReplacementCard</td>
+            </tr>
+            <tr>
+                <td class="bold">Suspend Card</td>
+                <td>@ViewBag.SuspendCard</td>
+            </tr>
+            <tr>
+                <td class="bold">Resume Card</td>
+                <td>@ViewBag.ResumeCard</td>
+            </tr>
+            <tr>
+                <td class="bold" style="width: 50%;">Errors</td>
+
+                @if (ViewBag.WSTotalErrors > 0)
+                {
+                    <td class="errors">@ViewBag.WSTotalErrors</td>
+                }
+                else
+                {
+                    <td class="non-error">@ViewBag.WSTotalErrors</td>
+                }
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="RetrievedResult">
+    @{int rowNo = 30;}
+    @if (ViewBag.WSSearchResult == null)
+    {
+        <table class="table_short">
+            <caption class="caption">Web Service Stream</caption>
+            <tr>
+                <th class="fixed_column_length_200">
+                    Date Time Start
+                </th>
+                <th class="fixed_column_length_300">
+                    Category
+                </th>
+                <th class="fixed_column_length_400">
+                    Event
+                </th>
+                <th class="fixed_column_length_200">
+                    GUID
+                </th>
+                <th class="fixed_column_length_100">
+                    Elapsed Time
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+
+
+            @foreach (var item in ViewBag.WSRetrievedResult)
+            {
+                <tr>
+                    <td>
+                        @item.DateStart.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                    <td>
+                        @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                    </td>
+                    <td>
+                        @{
+                            foreach (var evt in @item.Events)
+                            {
+                                @Html.Raw(string.Format("{0} (<span class=\"event_id_bold\">{1}</span>)", evt.Event, evt.EventID))
+                                        <br />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @item.GUID
+                    </td>
+                    <td>
+                        @{
+                            // Because ProcessTime is sorted by DESC by default, the first is most recent time stamp
+                            DateTime first = DateTime.MinValue;
+                            DateTime last = DateTime.MinValue;
+                            foreach (var evt in @item.Events)
+                            {
+                                if (first == DateTime.MinValue)
+                                {
+                                    first = evt.ProcessTime;
+                                }
+                                last = evt.ProcessTime;
+                            }
+                            TimeSpan ts = TimeSpan.MinValue;
+                            if (first >= last)
+                            {
+                                ts = first - last;
+                            }
+                            else
+                            {
+                                ts = last - first;
+                            }
+                            @Html.Raw(ts.Duration());
+                        }
+                    </td>
+
+
+                    @if (@item.Errors > 0)
+                    {
+                        <td class="errors">ERROR (@item.Errors) <a id=@(rowNo += 1) class="errorlink" href="#">Description and StackTrace</a>
+                            <p class="error_description">@item.ErrorDescr<br />
+                                <b>Stack Trace: </b>
+                                <br />@item.StackTrace
+                            </p>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="non-error">Completed</td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <table class="table_short" style="clear: both;">
+            <caption class="caption">Search Results for <strong>@ViewBag.WSRetrievedResult[0].ShortName</strong>: <strong style="font-size: 1em; color: red;">@ViewBag.WSKeyword</strong></caption>
+            <tr>
+                <th class="fixed_column_length_200">
+                    Date Time Start
+                </th>
+                <th class="fixed_column_length_300">
+                    Category
+                </th>
+                <th class="fixed_column_length_400">
+                    Event
+                </th>
+                <th class="fixed_column_length_200">
+                    GUID
+                </th>
+                <th class="fixed_column_length_100">
+                    Elapsed Time
+                </th>
+
+                <th>Status
+                </th>
+            </tr>
+
+            @foreach (var item in ViewBag.WSSearchResult)
+            {
+                <tr>
+                    <td>
+                        @item.DateStart.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                    </td>
+                    <td>
+                        @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                    </td>
+                    <td>
+                        @{
+                            foreach (var evt in @item.Events)
+                            {
+                                @Html.Raw(string.Format("{0} (<span class=\"event_id_bold\">{1}</span>)", evt.Event, evt.EventID))
+                                        <br />
+                            }
+                                    }
+                                </td>
+                                <td>
+                                    @item.GUID
+                                </td>
+                                <td>
+                        @{
+                            // Because ProcessTime is sorted by DESC by default, the first is most recent time stamp
+                            DateTime first = DateTime.MinValue;
+                            DateTime last = DateTime.MinValue;
+                            foreach (var evt in @item.Events)
+                            {
+                                if (first == DateTime.MinValue)
+                                {
+                                    first = evt.ProcessTime;
+                                }
+                                last = evt.ProcessTime;
+                            }
+                            TimeSpan ts = TimeSpan.MinValue;
+                            if (first >= last)
+                            {
+                                ts = first - last;
+                            }
+                            else
+                            {
+                                ts = last - first;
+                            }
+                            @Html.Raw(ts.Duration());
+                        }
+                    </td>
+                    @if (@item.Errors > 0)
+                    {
+                        <td class="errors">ERROR (@item.Errors) <a id=@(rowNo += 1) class="errorlink" href="#">Description and StackTrace</a>
+                            <p class="error_description">@item.ErrorDescr<br />
+                                <b>Stack Trace: </b>
+                                <br />@item.StackTrace
+                            </p>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="non-error">Completed</td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+</div>

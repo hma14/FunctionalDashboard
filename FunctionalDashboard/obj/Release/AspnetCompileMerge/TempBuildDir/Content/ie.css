@@ -1,0 +1,63 @@
+﻿/* Layout for older browsers
+-----------------------------------------------------------*/
+#container {
+    background: url("../Content/themes/base/images/background-container.gif") repeat-y top left;
+    width: 967px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+header {
+    padding-bottom: 0.5em;
+    background: url("../Content/themes/base/images/header-separator-small.png") repeat-x left bottom;
+}
+#logos {
+    display: none;
+}
+#logout {
+    margin-top: 0.625em;
+    margin-right: 1.25em;
+}
+#page {
+    margin: 1em 1.25em 2.5em;
+    font-size: 0.875em;
+    width: 600px;
+}
+section {
+    max-width: 600px;
+}
+h3 {
+    height: 1.25em;
+}
+.content {
+    padding: 1em 1em;
+}
+#menuPage {
+    margin-bottom: 1.25em;
+    z-index: 1;
+}
+#wrapper {
+    margin: 0 auto -5em;
+}
+#spacer, footer {
+    height: 5em;
+}
+#topNav {
+    display: none;
+}
+#smallUpass {
+    display: none;
+}
+.secondaryBtn {
+    display: block;
+}
+.linkButton {
+    display: block;
+}
+#homepage {
+    margin: 1em 1.25em 2.5em;
+    font-size: 0.875em;
+}
+#flexbox > div {
+    float: left;
+    width: 49%;
+} 

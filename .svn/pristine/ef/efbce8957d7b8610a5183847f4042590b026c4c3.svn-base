@@ -1,0 +1,413 @@
+﻿@model PagedList.IPagedList<FunctionalDashboard.ViewModels.UserRequestHistory>
+@using PagedList.Mvc;
+@using PagedList;
+@using FunctionalDashboard.Controllers;
+@using FunctionalDashboard.Models;
+
+<link rel="stylesheet" href="~/Content/popBox.css" type="text/css" />
+<script src="~/Scripts/popBox.js" type="text/javascript"></script>
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/EventsProgramUpass.js" type="text/javascript"></script>
+<script src="~/Scripts/KnowledgeBasePopup.js" type="text/javascript"></script>
+
+
+<div class="demo">
+    <div style="width: 100%;">
+        <h5>User Detail (UPASS)</h5>
+        <div style="float: left; width: 50%; margin-bottom:20px;">
+            <div style="float: left; width: 90%;">
+
+                <table class="table">
+                    <caption class="caption">NCS Detail</caption>
+                    <tr>
+                        <td class="bold">Program Name</td>
+
+                        <td>@ViewBag.Program</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">Institution Name</td>
+
+                        <td>@ViewBag.Name</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer ID</td>
+
+                        <td>@ViewBag.OrganizationId</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer Assigned ID</td>
+
+                        <td>@ViewBag.ShortName</td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+            <div style="float: left; width: 90%;">
+
+                <table class="table">
+                    <tr>
+                        <td class="bold">GUID</td>
+                        <td>@ViewBag.GUID</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">TSID</td>
+                        <td>@ViewBag.TSID</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @{
+#if false
+         <div class="RetrievedResult">
+            <table class="table">
+                <caption class="caption">Student Status</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Link Status", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.LinkStatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Elig Status", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.EligStatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Acct Status", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.AcctStatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Request Benefit", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.RequestBenefitSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+
+
+                </table>
+             </div>
+#endif
+        }
+
+         <div class="RetrievedResult">
+            <table class="table">
+                <caption class="caption">Set Eligibility Request</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Date", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.DateSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Elig", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.EligSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Datetime Processed", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.DatetimeProcessedSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Status", "UpdateSetEligibilityRequest", "UpassUserDetail", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+
+                    @foreach (var item in @ViewBag.SetEligibilityRequest)
+                    {
+                        <tr>
+                            <td>
+                                @item.EligDate
+                            </td>
+                            <td>
+                                @item.Elig
+                            </td>
+                            <td>
+                                @item.DatetimeProcessed.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>
+                            
+                            <td>
+                                @item.Status
+                            </td>
+                        </tr>
+                    }
+             </table>
+
+             <div class="pager" style="font-size: .5em; margin-top: -5px;">
+                Page @(ViewBag.SetEligibilityRequest.PageCount < ViewBag.SetEligibilityRequest.PageNumber ? 0 : ViewBag.SetEligibilityRequest.PageNumber) of @ViewBag.SetEligibilityRequest.PageCount
+
+                @Html.PagedListPager(ViewBag.SetEligibilityRequest as PagedList.IPagedList<FunctionalDashboard.ViewModels.SetEligibilityRequest>, page => Url.Action("UpdateSetEligibilityRequest", "UpassUserDetail", new { page, sortOrder1 = ViewBag.CurrentSort1 }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "UserDetail" }))
+
+            </div>
+        </div>
+
+        <div class="RetrievedResult">
+            <table class="table">
+                <caption class="caption">Set Card Request</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Card Serial Number", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.CardSerialNumberSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Category", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.CategorySortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   }) (<span class="event_id_bold">id</span>)
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Event", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.EventSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   }) (<span class="event_id_bold">id</span>)
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Datetime Processed", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.DatetimeProcessedSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Status", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    @{
+                        
+                        int j = 0;
+                    }
+                    @foreach (var item in @ViewBag.SetCardRequest)
+                    {
+                        j += 1;
+                        <tr>
+                            <td>
+                                @item.CardSerialNumber
+                            </td>
+                            <td>
+                                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                            </td>
+                            <td>
+                                <a href="#" id="@string.Format("event{0}", j)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now"> 
+                                            @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                                </a>
+                            </td>
+                            <td>
+                                @item.DatetimeProcessed.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>                            
+                           
+                            @if (@item.Status == EVENT_STATUS.ERROR || @item.Status == EVENT_STATUS.WARNING)
+                            {
+                                <td class="errors">@item.Status</td>
+                            }
+                            else if (@item.Status == EVENT_STATUS.CLEARED)
+                            {
+                                <td class="warnings">@item.Status</td>                                    
+                            }
+                            else if (@item.Status == EVENT_STATUS.ACKNOWLEDGED)
+                            {
+                                <td class="acknowledged">@item.Status</td>
+                            }                                
+                            else if (@item.Status == EVENT_STATUS.COMPLETED)
+                            {                                
+                                <td class="non-error">OK</td>
+                            }                            
+                        </tr>
+                    }
+             </table>
+
+             <div class="pager" style="font-size: .5em; margin-top: -5px;">
+                Page @(ViewBag.SetCardRequest.PageCount < ViewBag.SetCardRequest.PageNumber ? 0 : ViewBag.SetCardRequest.PageNumber) of @ViewBag.SetCardRequest.PageCount
+
+                @Html.PagedListPager(ViewBag.SetCardRequest as PagedList.IPagedList<FunctionalDashboard.ViewModels.SetCardRequest>, page => Url.Action("UpdateSetCardRequest", "UpassUserDetail", new { page, sortOrder2 = ViewBag.CurrentSort2 }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "UserDetail" }))
+
+            </div>
+        </div>
+
+
+
+        <div class="RetrievedResult">
+            <table class="table">
+                <caption class="caption">Set Benefit Request</caption>
+                <tr>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Benefit ID", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.BenefitIDSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Benefit Product ID", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.ProductIDSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                   <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Benefit Month", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.BenefitMonthSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                   <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Benefit Year", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.BenefitYearSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Category", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.CategorySortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   }) (<span class="event_id_bold">id</span>)
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Event", "UpdateSetCardRequest", "UpassUserDetail", new { sortOrder = ViewBag.EventSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   }) (<span class="event_id_bold">id</span>)
+                    </th>
+
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Datetime Processed", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.DatetimeProcessedSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    <th class="fixed_column_length_150">
+                        @Ajax.ActionLink("Status", "UpdateSetBenefitRequest", "UpassUserDetail", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "UserDetail"
+                   })
+                    </th>
+                    @{
+                        
+                        int k = 5;
+                    }
+                    @foreach (var item in @ViewBag.SetBenefitRequest)
+                    {
+                        k += 1;
+                        <tr>
+                            <td>
+                                @item.BenefitID
+                            </td>
+                            <td>
+                                @item.BenefitProductID
+                            </td>
+                            <td>
+                                @item.BenefitMonth
+                            </td>
+                            <td>
+                                @item.BenefitYear
+                            </td>
+                            <td>
+                                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                            </td>
+                            <td>
+                               <a href="#" id="@string.Format("event{0}", k)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now"> 
+                                            @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                                </a>
+
+                            </td>
+                            <td>
+                                @item.DatetimeProcessed.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>
+                                                                                   
+                            @if (@item.Status == EVENT_STATUS.ERROR)
+                            {
+                                    <td class="errors">@item.Status</td>
+                            }
+                            else if (@item.Status == EVENT_STATUS.WARNING)
+                            {
+                                <td class="warnings">@item.Status</td>                                    
+                            }
+                            else if (@item.Status == EVENT_STATUS.ACKNOWLEDGED)
+                            {
+                                <td class="acknowledged">@item.Status</td>
+                            }    
+                            else if (@item.Status == EVENT_STATUS.COMPLETED)
+                            {                                
+                                <td class="non-error">OK</td>
+                            }                          
+
+                        </tr>
+                    }
+             </table>
+
+             <div class="pager" style="font-size: .5em; margin-top: -5px;">
+                Page @(ViewBag.SetBenefitRequest.PageCount < ViewBag.SetBenefitRequest.PageNumber ? 0 : ViewBag.SetBenefitRequest.PageNumber) of @ViewBag.SetBenefitRequest.PageCount
+
+                @Html.PagedListPager(ViewBag.SetBenefitRequest as PagedList.IPagedList<FunctionalDashboard.ViewModels.SetBenefitRequest>, page => Url.Action("UpdateSetBenefitRequest", "UpassUserDetail", new { page, sortOrder3 = ViewBag.CurrentSort3 }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                      , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "UserDetail" }))
+
+            </div>
+        </div>
+
+    </div>
+</div>

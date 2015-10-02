@@ -1,0 +1,77 @@
+﻿@model FunctionalDashboard.ViewModels.PpassProgramWebService
+@using FunctionalDashboard.Models
+@using FunctionalDashboard.Controllers
+
+
+@{
+    Layout = null;
+}
+
+
+@{
+    if (Model.Events != null)
+    {
+        int i = 0;
+        foreach (var evt in Model.Events)
+        {
+            if (i > Logs.DropDwonListLength)
+            {
+                break;
+            }
+            i++;
+
+            if (evt.LogLevel == EVENT_STATUS.ERROR || evt.LogLevel == EVENT_STATUS.WARNING)
+            {
+                @Html.ActionLink(string.Format("{0} ({1})",
+                                            evt.Event, evt.EventID) as string,
+                                            "Index",
+                                            "XmlDataPpassWS",
+                                            new
+                                            {
+                                                ID = evt.ID,                                               
+                                            },
+                                            new { @class = "error_links" })
+
+            }
+            else if (evt.LogLevel == EVENT_STATUS.ACKNOWLEDGED)
+            {
+                @Html.ActionLink(string.Format("{0} ({1})",
+                                            evt.Event, evt.EventID) as string,
+                                            "Index",
+                                            "XmlDataPpassWS",
+                                            new
+                                            {
+                                                ID = evt.ID,
+                                            },
+                                            new { @class = "ack_links" })
+
+            }
+            else if (evt.LogLevel == EVENT_STATUS.CLEARED)
+            {
+                @Html.ActionLink(string.Format("{0} ({1})",
+                                            evt.Event, evt.EventID) as string,
+                                            "Index",
+                                            "XmlDataPpassWS",
+                                            new
+                                            {
+                                                ID = evt.ID,
+                                            },
+                                            new { @class = "warning_links" })
+
+            }
+            else
+            {
+                @Html.ActionLink(string.Format("{0} ({1})",
+                                            evt.Event, evt.EventID) as string,
+                                            "Index",
+                                            "XmlDataPpassWS",
+                                            new
+                                            {
+                                                ID = evt.ID,
+                                            },
+                                            null)
+            }
+            <br />
+        }
+    }
+}

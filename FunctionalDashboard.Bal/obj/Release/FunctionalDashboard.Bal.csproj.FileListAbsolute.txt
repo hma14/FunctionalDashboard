@@ -1,0 +1,4 @@
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Bal\bin\Release\FunctionalDashboard.Bal.dll
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Bal\bin\Release\FunctionalDashboard.Bal.pdb
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Bal\obj\Release\FunctionalDashboard.Bal.dll
+D:\OneDrive\Code\FunctionalDashboard1.11\FunctionalDashboard.Bal\obj\Release\FunctionalDashboard.Bal.pdb

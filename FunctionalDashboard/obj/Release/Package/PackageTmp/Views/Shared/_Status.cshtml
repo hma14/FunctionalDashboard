@@ -1,0 +1,76 @@
+﻿@using FunctionalDashboard.Models
+@using FunctionalDashboard.Controllers
+@model FunctionalDashboard.ViewModels.DataLoadStatus
+
+
+@{
+    Layout = null;
+}
+
+@{
+    <table style="width: 500px;">
+        <tr>
+            <td>Welcome: <span class="status">@User.Identity.Name</span></td>
+            <td>SLT Process Time: <span class="status">@BaseController.SLTAlertProcessTime.TotalSeconds</span> (sec)</td>
+        </tr>
+    </table>
+    if (!Model.forSLTAlert)
+    {
+        if (Model.StartDate < @Logs.StartDate)
+        {
+        
+            <table style="width: 550px;">
+                <tr>
+                    <td>Loading Start:</td>
+                    <td><span class="indicator_highlight">@BaseController.LoadStarted</span></td>
+                    <td>Pendng Start:</td>
+                    <td><span class="status">@Model.StartDate</span></td>
+                    <td>End:</td>
+                    <td><span class="status">@Logs.EndDate</span></td>
+                </tr>
+                <tr>
+                    <td>Loading Complete:</td>
+                    <td><span class="indicator_highlight">@BaseController.LoadCompleted</span></td>
+                    <td>Current Start:</td>
+                    <td><span class="status">@Logs.StartDate</span></td>
+                    <td>End:</td>
+                    <td><span class="status">@Logs.EndDate</span></td>
+                </tr>
+            </table>
+        }
+        else
+        {       
+            <table style="width: 400px;">
+                <tr>
+                    <td>Loading Start:</td>
+                    <td><span class="indicator">@BaseController.LoadStarted</span></td>
+                    <td>Start Date:</td>
+                    <td><span class="status">@Logs.StartDate</span></td>
+                </tr>
+                <tr>
+                    <td>Loading Complete:</td>
+                    <td><span class="indicator">@BaseController.LoadCompleted</span></td>
+                    <td>End Date:</td>
+                    <td><span class="status">@Logs.EndDate</span></td>
+                </tr>
+            </table>        
+        }
+    }
+    else
+    {       
+        <table style="width: 400px;">
+            <tr>
+                <td>Loading Start:</td>
+                <td><span class="indicator">@BaseController.LoadStarted</span></td>
+                <td>Start Date:</td>
+                <td><span class="status">@Logs.StartDate</span></td>
+            </tr>
+            <tr>
+                <td>Loading Complete:</td>
+                <td><span class="indicator">@BaseController.LoadCompleted</span></td>
+                <td>End Date:</td>
+                <td><span class="status">@Logs.EndDate</span></td>
+            </tr>
+        </table>        
+    }
+}

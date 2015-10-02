@@ -1,0 +1,59 @@
+﻿@using FunctionalDashboard.Models
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $('#StartDatepicker30').datepicker();
+    });
+
+    $(function () {
+        $("#submit").bind("click", function () {
+            $('#spinner30').fadeIn();
+        });
+    })
+
+
+
+    $(".refresh").bind("click", function () {
+        $('#spinner').fadeIn();
+    });
+
+</script>
+
+<div id="spinner30" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+<div class="demo">
+    <div>
+        @using (Ajax.BeginForm("MonitorUpdatePartial", "Home", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "updateArea"
+    }))
+        {
+
+
+            <table class="datepickers">
+
+                <tr>
+                    <td>Start Date:
+                    <input style="width:185px;margin:2px;" type="text" id="StartDatepicker30" class="datefield" name="startDate" value=@ViewBag.startDate />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn_short" id="submit" type="submit" value="Select Date" name="SelectDate" style="float: right; margin: 2px;" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <br />
+    <div class="error">
+        @Logs.Exception
+    </div>
+</div>

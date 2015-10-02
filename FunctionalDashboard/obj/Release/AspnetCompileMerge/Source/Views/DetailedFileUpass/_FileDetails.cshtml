@@ -1,0 +1,386 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using System.Xml.Linq;
+
+@{
+    ViewBag.Title = "Detailed - File (UPASS)";
+}
+
+<link rel="stylesheet" href="~/Content/popBox.css" type="text/css" />
+<script src="~/Scripts/popBox.js" type="text/javascript"></script>
+<script src="~/Scripts/Common.js" type="text/javascript"></script>
+<script src="~/Scripts/UpassFileDetails.js" type="text/javascript"></script>
+<script src="~/Scripts/KnowledgeBasePopup.js" type="text/javascript"></script>
+
+
+
+<div id="spinner" class="spinner" style="display: none;">
+    <img id="img-spinner" src="~/Images/ajax_loader.gif" alt="Loading" />
+</div>
+
+
+<div class="demo">
+    <div style="width: 100%;">
+        <h5>Detailed - File (UPASS)</h5>
+        <div style="width: 100%;">
+            <div style="float: left; width: 60%;">
+
+                <table class="table">
+                    <caption class="caption">NCS Detail</caption>
+                    <tr>
+                        <td class="bold">NCS Organisation Name</td>
+                        @if (ViewBag.NCSInfo != null)
+                        { 
+                            <td>@ViewBag.NCSInfo.Name</td>
+                        }
+                        else
+                        {
+                            <td>NA</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer ID</td>
+                        @if (ViewBag.NCSInfo != null)
+                        {
+                            <td>@ViewBag.NCSInfo.OrganizationId</td>
+                        }
+                        else
+                        {
+                            <td>NA</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="bold">NCS Customer Assigned ID</td>
+                        @if (ViewBag.NCSInfo != null)
+                        {
+                            <td>@ViewBag.NCSInfo.ShortName</td>
+                        }
+                        else
+                        {
+                            <td>NA</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="bold">File Name</td>
+                        <td>@ViewBag.FileName</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">File Directory</td>
+                        <td>@ViewBag.DirectoryName</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">Date time Received</td>
+                        <td>@ViewBag.DateStart</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">Status - Error(Ack or Cleared)</td>
+                        @if (@ViewBag.TotalErrors > 0)
+                        {
+                            <td class="errors">
+                                @String.Format("ERROR {0:#,###0} ({1:#,###0})", @ViewBag.TotalErrors, @ViewBag.TotalClearedErrors + @ViewBag.TotalAcknowledged)
+                            </td>
+                        }
+                        else if (@ViewBag.TotalAcknowledged > 0)
+                        {
+                            <td class="acknowledged">
+                                @String.Format("ACKNOWLEDGED ({0:#,###0})", @ViewBag.TotalAcknowledged + @ViewBag.TotalClearedErrors)
+                            </td>
+                        }
+                        else if (@ViewBag.TotalErrors == 0 && @ViewBag.TotalAcknowledged == 0 && @ViewBag.TotalClearedErrors > 0)
+                        {
+                            <td class="warnings">
+                                @String.Format("CLEARED ({0:#,###0})", @ViewBag.TotalClearedErrors)
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="non-error">OK
+                            </td>
+                        }
+                    </tr>
+
+                </table>
+            </div>
+
+
+            <div style="float: left; width: 100%;">
+
+                <table class="table" id="retrieveResult">
+                    <caption class="caption">File Detail</caption>
+                    <tr>
+                        <th>
+                            @Ajax.ActionLink("Date Time Start", "UpdateRetrievedResult", "DetailedFileUpass", new { sortOrder = ViewBag.DateTimeStartSortParm }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "FileDetails"
+                       })
+
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("Category", "UpdateRetrievedResult", "DetailedFileUpass", new { sortOrder = ViewBag.CategorySortParm }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "FileDetails"
+                       })
+                            (<span class="event_id_bold">id</span>)
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("Event", "UpdateRetrievedResult", "DetailedFileUpass", new { sortOrder = ViewBag.EventSortParm }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "FileDetails"
+                       })
+                            (<span class="event_id_bold">id</span>)
+                        </th>
+                        <th class="fixed_column_length_300">
+                            @Ajax.ActionLink("GUID", "UpdateRetrievedResult", "DetailedFileUpass", new { sortOrder = ViewBag.GUIDSortParm }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "FileDetails"
+                       })
+
+                        </th>
+
+                        <th>XML Data                           
+                        </th>
+                        <th>
+                            @Ajax.ActionLink("Status", "UpdateRetrievedResult", "DetailedFileUpass", new { sortOrder = ViewBag.StatusSortParm }, new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "FileDetails"
+                       })
+                        </th>
+
+                    </tr>
+                    @{
+                        int k = 60;
+                    }
+                    @foreach (var item in ViewBag.RetrievedResult)
+                    {
+                        k += 1;
+                        if (@item.CurrentClicked == 1)
+                        {     
+                        <tr>
+                            <td  class="current_selected">
+                                @item.ProcessDatetime.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>
+                            <td  class="current_selected">
+                                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                            </td>
+                            <td class="current_selected">
+                                <a href="#" id="@string.Format("event{0}", k)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now">
+                                    @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                                </a>
+                            </td>
+                            <td class="current_selected">
+                                @{
+                            if (@item.UniqueParticipantId != null)
+                            { 
+                                    @Html.ActionLink(String.Format("{0}", @item.UniqueParticipantId) as String,
+                                                                             "Index",
+                                                                             "UpassUserDetail",
+                                                                             new
+                                                                             {
+                                                                                 institutionID = @item.InstitutionID,
+                                                                                 guid = @item.UniqueParticipantId,
+                                                                                 csn = @item.CardSerialNumber,
+                                                                             },
+                                                                             null)
+                            }
+                            else
+                            {
+                                    @item.UniqueParticipantId
+                            }
+                                }
+                            </td>
+                            <td class="current_selected">
+                                @{ 
+                                    @Html.ActionLink("View",
+                                                     "Index",
+                                                     "XmlDataUpass",
+                                                     new
+                                                     {
+                                                         ID = @item.ID,
+                                                         //category = @item.Category,
+                                                         //Event = @item.Event,
+                                                         //uri = @item.URI,
+                                                         //uniqueParticipantID = @item.UniqueParticipantId
+                                                     },
+                                                     null)
+                                }
+
+                            </td>
+                            @if (@item.Errors > 0)
+                            {
+                            
+                                <td class="errors">ERROR
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[ACK]</a>
+
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors + @item.Acknowledged)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else if (@item.Acknowledged > 0)
+                            {
+                                <td class="acknowledged">ACKNOWLEDGED
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[CLEAR]</a>
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("ACKNOWLEDGED {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors + @item.Acknowledged)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else if (item.Acknowledged == 0 && @item.Errors == 0 && @item.ClearedErrors > 0)
+                            {
+                                <td class="warnings">CLEARED
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[UNCLEAR]</a>
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="non-error">Completed
+                                </td>
+                            }
+
+                        </tr>
+                        }
+                        else
+                        {
+                        <tr>
+                            <td>
+                                @item.ProcessDatetime.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)
+                            </td>
+                            <td>
+                                @item.Category (<span class="event_id_bold">@item.CategoryID</span>)
+                            </td>
+                            <td>
+                                <a href="#" id="@string.Format("event{0}", k)"  data-id2="@item.Category"      data-id3="@item.CategoryID" 
+                                                                                data-id4="@item.Event"         data-id5="@item.EventID" 
+                                                                                data-id6="@User.Identity.Name" data-id7="@DateTime.Now">
+                                    @item.Event (<span class="event_id_bold">@item.EventID</span>)
+                                </a>
+                            </td>
+                            <td>
+                                @{
+                            if (@item.UniqueParticipantId != null)
+                            { 
+                                    @Html.ActionLink(String.Format("{0}", @item.UniqueParticipantId) as String,
+                                                                             "Index",
+                                                                             "UpassUserDetail",
+                                                                             new
+                                                                             {
+                                                                                 institutionID = @item.InstitutionID,
+                                                                                 guid = @item.UniqueParticipantId,
+                                                                                 csn = @item.CardSerialNumber,
+                                                                             },
+                                                                             null)
+                            }
+                            else
+                            {
+                                    @item.UniqueParticipantId
+                            }
+                                }
+                            </td>
+                            <td>
+                                @{ 
+                                    @Html.ActionLink("View",
+                                                     "Index",
+                                                     "XmlDataUpass",
+                                                     new
+                                                     {
+                                                         ID = @item.ID
+                                                     },
+                                                     null)
+                                }
+
+                            </td>
+                            @if (@item.Errors > 0)
+                            {
+                            
+                                <td class="errors">ERROR
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[ACK]</a>
+
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("ERROR {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors + @item.Acknowledged)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else if (@item.Acknowledged > 0)
+                            {
+                                <td class="acknowledged">ACKNOWLEDGED
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[CLEAR]</a>
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("ACKNOWLEDGED {0:#,###0} ({1:#,###0})", @item.Errors, @item.ClearedErrors + @item.Acknowledged)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else if (item.Acknowledged == 0 && @item.Errors == 0 && @item.ClearedErrors > 0)
+                            {
+                                <td class="warnings">CLEARED
+                                    <a href="#" id="@string.Format("clear{0}", k)" \
+                                        data-id="@item.ProgramID" data-id2="@item.InstitutionID" \
+                                        data-id3="@item.CategoryID" data-id4="@item.EventID" data-id5="@item.ProcessDatetime.Ticks">[UNCLEAR]</a>
+                                    <a href="#" id="@string.Format("notes{0}", k)" 
+                                        data-id="@item.ProgramID" data-id2="@item.Institution" data-id3="@item.InstitutionID" \
+                                        data-id4="@item.Category" data-id5="@item.CategoryID" data-id6="@item.Event" \
+                                        data-id7="@item.EventID" data-id8="@item.ProcessErrorID" data-id9="@item.ProcessErrorDescr" \
+                                        data-id10="@String.Format("CLEARED ({0:#,###0})", @item.ClearedErrors)" \
+                                        data-id11="@item.ProcessDatetime.Ticks" >[NOTES]</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="non-error">Completed
+                                </td>
+                            }
+
+                        </tr>
+                        }
+                    }
+                </table>
+                <div class="pager" style="font-size: .6em;">
+                    Page @(ViewBag.RetrievedResult.PageCount < ViewBag.RetrievedResult.PageNumber ? 0 : ViewBag.RetrievedResult.PageNumber) of @ViewBag.RetrievedResult.PageCount
+                    @Html.PagedListPager(ViewBag.RetrievedResult as PagedList.IPagedList<FunctionalDashboard.ViewModels.UpassFileDetail>, page => Url.Action("UpdateRetrievedResult", "DetailedFileUpass", new { page, sortOrder = ViewBag.CurrentSortOrder }),
+                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded }
+                                                                 , new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "FileDetails" }))
+
+                </div>
+
+            </div>
+        </div>
+    </div>
