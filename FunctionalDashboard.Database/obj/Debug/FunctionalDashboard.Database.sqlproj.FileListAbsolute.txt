@@ -17,3 +17,8 @@ D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\D
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\predeploy.sql
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dacpac
+D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
+D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
+D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb

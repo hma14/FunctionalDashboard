@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="2" virtualPath="/App_Browsers/" hash="ffffffff93ea281d" filehash="1e2362624b79" flags="110000" assembly="App_Browsers" type="ASP.ApplicationBrowserCapabilitiesFactory">
+<preserve resultType="2" virtualPath="/App_Browsers/" hash="ffffffff93ea281d" filehash="ffffbe56b90c32b3" flags="110000" assembly="App_Browsers" type="ASP.ApplicationBrowserCapabilitiesFactory">
     <filedeps>
         <filedep name="/App_Browsers/qt.browser" />
     </filedeps>
