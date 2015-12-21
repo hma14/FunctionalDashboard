@@ -1,0 +1,5 @@
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Output\FunctionalDashboard.Database.dacpac
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Output\FunctionalDashboard.Database.dll
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Output\FunctionalDashboard.Database.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Database\obj\Release\FunctionalDashboard.Database.dll
+F:\FunctionalDashboard\FunctionalDashboard.Database\obj\Release\FunctionalDashboard.Database.pdb

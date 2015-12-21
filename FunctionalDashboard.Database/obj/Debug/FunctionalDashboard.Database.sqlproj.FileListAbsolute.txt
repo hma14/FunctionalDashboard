@@ -22,3 +22,8 @@ D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\Func
 D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
 D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
 D:\OneDrive\Code\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dacpac
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.dll
+F:\FunctionalDashboard\FunctionalDashboard.Database\bin\Debug\FunctionalDashboard.Database.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.dll
+F:\FunctionalDashboard\FunctionalDashboard.Database\obj\Debug\FunctionalDashboard.Database.pdb

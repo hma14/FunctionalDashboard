@@ -1,0 +1,10 @@
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\FunctionalDashboard.Dal.Test.dll.config
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\FunctionalDashboard.Dal.Test.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\FunctionalDashboard.Dal.Test.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\FunctionalDashboard.Dal.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\FunctionalDashboard.Dal.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Release\FunctionalDashboard.Dal.Test.csprojResolveAssemblyReference.cache
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Release\FunctionalDashboard.Dal.Test.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Release\FunctionalDashboard.Dal.Test.pdb

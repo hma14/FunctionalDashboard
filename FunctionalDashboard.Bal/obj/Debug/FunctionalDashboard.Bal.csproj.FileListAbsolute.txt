@@ -3,3 +3,8 @@ C:\FunctionalDashboard1.11\FunctionalDashboard.Bal\bin\Debug\FunctionalDashboard
 C:\FunctionalDashboard1.11\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.csprojResolveAssemblyReference.cache
 C:\FunctionalDashboard1.11\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.dll
 C:\FunctionalDashboard1.11\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Bal\bin\Debug\FunctionalDashboard.Bal.dll
+F:\FunctionalDashboard\FunctionalDashboard.Bal\bin\Debug\FunctionalDashboard.Bal.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.csprojResolveAssemblyReference.cache
+F:\FunctionalDashboard\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.dll
+F:\FunctionalDashboard\FunctionalDashboard.Bal\obj\Debug\FunctionalDashboard.Bal.pdb

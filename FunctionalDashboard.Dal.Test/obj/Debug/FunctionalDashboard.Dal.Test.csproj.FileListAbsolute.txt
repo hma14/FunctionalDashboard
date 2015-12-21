@@ -26,3 +26,13 @@ D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\D
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.csprojResolveAssemblyReference.cache
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.dll
 D:\OneDrive\Code\Programs\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\FunctionalDashboard.Dal.Test.dll.config
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\FunctionalDashboard.Dal.Test.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\FunctionalDashboard.Dal.Test.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\FunctionalDashboard.Dal.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\FunctionalDashboard.Dal.pdb
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.csprojResolveAssemblyReference.cache
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.dll
+F:\FunctionalDashboard\FunctionalDashboard.Dal.Test\obj\Debug\FunctionalDashboard.Dal.Test.pdb

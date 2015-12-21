@@ -18,3 +18,13 @@ D:\OneDrive\Code\Programs\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLT
 D:\OneDrive\Code\Programs\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.csproj.GenerateResource.Cache
 D:\OneDrive\Code\Programs\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.exe
 D:\OneDrive\Code\Programs\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.pdb
+F:\FunctionalDashboard\SLTTrackingProcess\bin\Release\SLTTrackingProcess.exe.config
+F:\FunctionalDashboard\SLTTrackingProcess\bin\Release\SLTTrackingProcess.exe
+F:\FunctionalDashboard\SLTTrackingProcess\bin\Release\SLTTrackingProcess.pdb
+F:\FunctionalDashboard\SLTTrackingProcess\bin\Release\FunctionalDashboard.Dal.dll
+F:\FunctionalDashboard\SLTTrackingProcess\bin\Release\FunctionalDashboard.Dal.pdb
+F:\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.csprojResolveAssemblyReference.cache
+F:\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.SLTTrackingProcessInstaller.resources
+F:\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.csproj.GenerateResource.Cache
+F:\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.exe
+F:\FunctionalDashboard\SLTTrackingProcess\obj\Release\SLTTrackingProcess.pdb

@@ -90,7 +90,15 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Content\bootstrap-theme.css.map" />
+    <None Include="Content\bootstrap.css.map" />
     <None Include="Docs\windows_service_install.docx" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -109,7 +117,18 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SLTRulesInstaller.resx">
       <DependentUpon>SLTRulesInstaller.cs</DependentUpon>
